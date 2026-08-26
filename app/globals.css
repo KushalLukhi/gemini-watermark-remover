@@ -1956,10 +1956,18 @@ body {
 
 .main-canvas-wrapper {
   flex: 1;
-  min-height: 200px;
+  min-height: 240px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+}
+
+.main-canvas-wrapper canvas {
+  width: 100% !important;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-md);
 }
 
 /* Right column — stacked zoom cards */

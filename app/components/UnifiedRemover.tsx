@@ -99,10 +99,12 @@ export default function UnifiedRemover() {
       offCtx.putImageData(copy, 0, 0);
 
       // Main Canvas (scaled full-frame preview)
-      const maxW = 360;
+      const maxW = mainCanvas.parentElement?.clientWidth || 900;
       const scale = Math.min(1, maxW / width);
       mainCanvas.width = Math.round(width * scale);
       mainCanvas.height = Math.round(height * scale);
+      mainCanvas.style.width = '100%';
+      mainCanvas.style.height = 'auto';
       const mctx = mainCanvas.getContext('2d')!;
       mctx.drawImage(offscreen, 0, 0, mainCanvas.width, mainCanvas.height);
       mctx.strokeStyle = '#6366f1';
@@ -406,7 +408,7 @@ export default function UnifiedRemover() {
               <span className="canvas-title">
                 <Icon icon="ph:frame-corners" width={14} /> Preview (Full Frame)
               </span>
-              <div className="canvas-wrapper main-canvas-wrapper">
+              <div className="main-canvas-wrapper">
                 <canvas ref={mainCanvasRef} />
               </div>
             </div>
