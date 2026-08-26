@@ -270,30 +270,46 @@ body {
   font-weight: 600;
 }
 
-/* ── Decorative Background Frames ── */
-.hero-bg-frame-container {
+/* ── Animated Hero Blobs ── */
+@keyframes blob-float-left {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(12px, -18px) scale(1.05); }
+  66%       { transform: translate(-8px, 10px) scale(0.97); }
+}
+
+@keyframes blob-float-right {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-14px, 12px) scale(1.04); }
+  66%       { transform: translate(10px, -16px) scale(0.96); }
+}
+
+.hero-blob-left,
+.hero-blob-right {
   position: absolute;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.5;
+  border-radius: 50%;
+  filter: blur(60px);
 }
 
-.hero-bg-frame-container.left {
-  top: 40px;
-  left: -80px;
+.hero-blob-left {
+  width: 280px;
+  height: 280px;
+  top: -40px;
+  left: -100px;
+  background: radial-gradient(circle, #c7d2fe 0%, #a5b4fc 50%, transparent 80%);
+  opacity: 0.45;
+  animation: blob-float-left 8s ease-in-out infinite;
 }
 
-.hero-bg-frame-container.right {
-  top: 80px;
-  right: -100px;
-}
-
-.hero-bg-frame {
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
+.hero-blob-right {
+  width: 320px;
+  height: 320px;
+  top: 20px;
+  right: -120px;
+  background: radial-gradient(circle, #fbcfe8 0%, #c4b5fd 50%, transparent 80%);
+  opacity: 0.35;
+  animation: blob-float-right 10s ease-in-out infinite;
 }
 
 /* ── Trust / Stat Strip ── */
@@ -1742,6 +1758,7 @@ body {
     grid-template-columns: 1fr;
   }
 
+
   .trust-strip-grid {
     grid-template-columns: 1fr;
   }
@@ -1749,4 +1766,155 @@ body {
   .dropzone {
     padding: 2.5rem 1rem;
   }
+
+  .animated-compare {
+    height: 260px;
+  }
+
+  .comparison-media {
+    grid-template-columns: 1fr;
+  }
 }
+
+/* ── Animated Drag-to-Reveal Comparison Slider ── */
+.animated-compare-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.animated-compare {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  height: 360px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--bg-card-border);
+  box-shadow: var(--shadow-lg);
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.compare-panel {
+  position: absolute;
+  inset: 0;
+}
+
+.compare-before,
+.compare-after {
+  width: 100%;
+  height: 100%;
+}
+
+.compare-before {
+  z-index: 2;
+}
+
+.compare-after {
+  z-index: 1;
+}
+
+.compare-demo-img {
+  width: 100%;
+  height: 100%;
+}
+
+.compare-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.compare-demo-after .compare-svg {
+  /* brighter saturation on "after" side */
+  filter: saturate(1.1) brightness(1.03);
+}
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.compare-handle-line {
+  flex: 1;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+.compare-handle-knob {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--brand-primary);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  pointer-events: all;
+  cursor: col-resize;
+}
+
+.compare-label {
+  position: absolute;
+  top: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.compare-label-before {
+  left: 12px;
+  background: rgba(225, 29, 72, 0.85);
+  color: #ffffff;
+}
+
+.compare-label-after {
+  right: 12px;
+  background: rgba(5, 150, 105, 0.85);
+  color: #ffffff;
+}
+
+.compare-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ── Full-width single method card ── */
+.method-card-full {
+  width: 100%;
+}
+
+.method-steps-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .method-steps-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Footer simplified ── */
+.footer-content {
+  gap: 0.65rem;
+}
+

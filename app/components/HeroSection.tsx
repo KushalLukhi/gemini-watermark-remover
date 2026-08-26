@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export default function HeroSection() {
   return (
     <>
@@ -12,33 +10,9 @@ export default function HeroSection() {
         </p>
       </div>
 
-      {/* Left Decorative Background Frame */}
-      <div className="hero-bg-frame-container left" aria-hidden="true">
-        <div className="hero-bg-frame">
-          <Image
-            src="/assets/bg1.webp"
-            alt="Gemini watermark removal preview illustration"
-            className="hero-bg-img"
-            width={250}
-            height={250}
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      {/* Right Decorative Background Frame */}
-      <div className="hero-bg-frame-container right" aria-hidden="true">
-        <div className="hero-bg-frame">
-          <Image
-            src="/assets/bg2.webp"
-            alt="Veo 3 AI video watermark removal preview illustration"
-            className="hero-bg-img"
-            width={350}
-            height={350}
-            loading="lazy"
-          />
-        </div>
-      </div>
+      {/* Animated floating blobs — no images */}
+      <div className="hero-blob-left" aria-hidden="true" />
+      <div className="hero-blob-right" aria-hidden="true" />
     </>
   );
 }

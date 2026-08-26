@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { Icon } from '@iconify/react';
 
 export default function Footer() {
   const privacyRef = useRef<HTMLDialogElement>(null);
@@ -11,17 +10,6 @@ export default function Footer() {
     <>
       <footer className="app-footer">
         <div className="footer-content">
-          <p className="footer-credit">
-            Designed &amp; Developed by{' '}
-            <a
-              href="https://ishara-madu.github.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-author-link"
-            >
-              <strong>Ishara M.</strong>
-            </a>
-          </p>
           <div className="footer-links">
             <button type="button" className="footer-link-btn" onClick={() => privacyRef.current?.showModal()}>
               Privacy Policy
@@ -30,16 +18,6 @@ export default function Footer() {
             <button type="button" className="footer-link-btn" onClick={() => termsRef.current?.showModal()}>
               Terms of Service
             </button>
-            <span className="footer-dot">•</span>
-            <a
-              href="https://buymeacoffee.com/ishara.madu"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-support-btn"
-            >
-              <Icon icon="ph:coffee-bold" width={15} className="text-amber-600" />
-              <span>Buy Me a Coffee</span>
-            </a>
           </div>
           <p className="footer-sub">
             100% Free, Private &amp; Open-Architecture • All media processed locally in your browser with zero server uploads
