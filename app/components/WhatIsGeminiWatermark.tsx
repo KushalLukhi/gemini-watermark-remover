@@ -31,9 +31,9 @@ export default function WhatIsGeminiWatermark() {
           </div>
           <h3 className="info-card-title">How Alpha Blending Works</h3>
           <p className="info-card-text">
-            The watermark is not an opaque stamp—it is blended into the image using standard linear alpha compositing:
-            <code className="code-badge">Pixel = Background × (1 - α) + Logo × α</code>.
-            Because the original background pixels are preserved underneath the transparency, they can be mathematically reconstructed.
+            The watermark is not an opaque stamp — it is blended into the image using transparent alpha compositing.
+            Because the original background pixels are preserved underneath the transparency layer, they can be
+            precisely reconstructed without any visual loss or smudging.
           </p>
         </div>
 
