@@ -1913,8 +1913,186 @@ body {
   }
 }
 
+
 /* ── Footer simplified ── */
 .footer-content {
   gap: 0.65rem;
 }
+
+/* ── Tuner Container ── */
+.tuner-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detect-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* ── Tuner Preview Row (main canvas + zoom pair side-by-side) ── */
+.tuner-preview-row {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.tuner-canvas-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.main-canvas-wrapper {
+  flex: 1;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Right column — stacked zoom cards */
+.tuner-zoom-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.zoom-card {
+  background: #ffffff;
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.zoom-card .canvas-wrapper {
+  flex: 1;
+}
+
+.zoom-card canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.text-blue-600  { color: #2563eb; }
+.text-green-600 { color: #16a34a; }
+
+/* ── Adjust Toggle Row ── */
+.adjust-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.adjust-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ── Tuner Actions ── */
+.tuner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--bg-card-border);
+}
+
+/* ── Progress bar ── */
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* Dropzone extras */
+.dropzone-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropzone-icon {
+  color: var(--brand-primary);
+  margin-bottom: 0.25rem;
+}
+
+.dropzone-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e7ff;
+  border-top-color: var(--brand-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hidden { display: none !important; }
+
+/* mt-4 utility */
+.mt-4 { margin-top: 1rem; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-center { text-align: center; }
+.font-medium { font-weight: 500; }
+.mb-2 { margin-bottom: 0.5rem; }
+.text-slate-700 { color: #334155; }
+.text-indigo-600 { color: #4f46e5; }
+.w-full { width: 100%; }
+.justify-center { justify-content: center; }
+
+@media (max-width: 768px) {
+  .tuner-preview-row {
+    grid-template-columns: 1fr;
+  }
+
+  .tuner-zoom-col {
+    flex-direction: row;
+  }
+}
+
 

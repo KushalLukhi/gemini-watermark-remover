@@ -33,6 +33,7 @@ export default function UnifiedRemover() {
   const [mediaDims, setMediaDims] = useState<{ width: number; height: number }>({ width: 1536, height: 1536 });
   const [exporting, setExporting] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
+  const [showSliders, setShowSliders] = useState(false);
 
   // Engines
   const [imgEngine, setImgEngine] = useState<WatermarkEngine | null>(null);
@@ -398,19 +399,20 @@ export default function UnifiedRemover() {
         <div className="tuner-container">
           {detectBadge && <div className="detect-badge">{detectBadge}</div>}
 
+          {/* Side-by-side: main preview + zoom pair column */}
           <div className="tuner-preview-row">
             {/* Main Canvas */}
             <div className="tuner-canvas-box main-box">
               <span className="canvas-title">
                 <Icon icon="ph:frame-corners" width={14} /> Preview (Full Frame)
               </span>
-              <div className="canvas-wrapper">
+              <div className="canvas-wrapper main-canvas-wrapper">
                 <canvas ref={mainCanvasRef} />
               </div>
             </div>
 
-            {/* Zoom Pair */}
-            <div className="tuner-canvas-box zoom-box">
+            {/* Zoom Pair stacked on right */}
+            <div className="tuner-zoom-col">
               <div className="zoom-card">
                 <span className="canvas-title text-blue-600">
                   <Icon icon="ph:magnifying-glass-plus" width={14} /> Zoomed Original
@@ -430,30 +432,48 @@ export default function UnifiedRemover() {
             </div>
           </div>
 
-          {/* Controls Sliders */}
-          <div className="tuner-sliders mt-4">
-            {[
-              { label: 'Strength (Gain)', key: 'gain' as const, min: 0.1, max: 2.0, step: 0.05, fmt: (v: number) => `${v.toFixed(2)}x` },
-              { label: 'Size Scale', key: 'scale' as const, min: 0.5, max: 2.5, step: 0.01, fmt: (v: number) => `${v.toFixed(2)}x` },
-              { label: 'Position X', key: 'offsetX' as const, min: -Math.round(mediaDims.width * 0.45), max: Math.round(mediaDims.width * 0.2), step: 1, fmt: (v: number) => `${v}px` },
-              { label: 'Position Y', key: 'offsetY' as const, min: -Math.round(mediaDims.height * 0.45), max: Math.round(mediaDims.height * 0.2), step: 1, fmt: (v: number) => `${v}px` },
-            ].map(({ label, key, min, max, step, fmt }) => (
-              <div key={key} className="slider-group">
-                <div className="tuner-slider-label">
-                  <span>{label}</span>
-                  <span>{fmt(sliders[key])}</span>
-                </div>
-                <input
-                  type="range"
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={sliders[key]}
-                  onChange={(e) => updateSlider(key, parseFloat(e.target.value))}
-                />
-              </div>
-            ))}
+          {/* Collapsible Adjust Sliders */}
+          <div className="adjust-toggle-row">
+            <button
+              className="btn btn-secondary adjust-toggle-btn"
+              onClick={() => setShowSliders((s) => !s)}
+            >
+              <Icon icon={showSliders ? 'ph:caret-up-bold' : 'ph:sliders-horizontal-bold'} width={16} />
+              {showSliders ? 'Hide Adjustments' : 'Adjust'}
+            </button>
+            <button
+              className="btn btn-secondary text-xs"
+              onClick={() => setSliders(detectedRef.current)}
+            >
+              <Icon icon="ph:arrow-counter-clockwise" width={14} /> Reset
+            </button>
           </div>
+
+          {showSliders && (
+            <div className="tuner-sliders">
+              {[
+                { label: 'Strength (Gain)', key: 'gain' as const, min: 0.1, max: 2.0, step: 0.05, fmt: (v: number) => `${v.toFixed(2)}x` },
+                { label: 'Size Scale', key: 'scale' as const, min: 0.5, max: 2.5, step: 0.01, fmt: (v: number) => `${v.toFixed(2)}x` },
+                { label: 'Position X', key: 'offsetX' as const, min: -Math.round(mediaDims.width * 0.45), max: Math.round(mediaDims.width * 0.2), step: 1, fmt: (v: number) => `${v}px` },
+                { label: 'Position Y', key: 'offsetY' as const, min: -Math.round(mediaDims.height * 0.45), max: Math.round(mediaDims.height * 0.2), step: 1, fmt: (v: number) => `${v}px` },
+              ].map(({ label, key, min, max, step, fmt }) => (
+                <div key={key} className="slider-group">
+                  <div className="tuner-slider-label">
+                    <span>{label}</span>
+                    <span>{fmt(sliders[key])}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={min}
+                    max={max}
+                    step={step}
+                    value={sliders[key]}
+                    onChange={(e) => updateSlider(key, parseFloat(e.target.value))}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Progress Bar (For Video) */}
           {fileType === 'video' && progress !== null && (
@@ -468,11 +488,8 @@ export default function UnifiedRemover() {
 
           {/* Actions */}
           <div className="tuner-actions">
-            <button
-              className="btn btn-secondary text-xs"
-              onClick={() => setSliders(detectedRef.current)}
-            >
-              <Icon icon="ph:arrow-counter-clockwise" /> Reset Sliders
+            <button className="btn btn-secondary text-xs" onClick={handleReset}>
+              <Icon icon="ph:upload-simple" width={14} /> Upload Another
             </button>
             <button
               className="btn btn-primary"
@@ -487,13 +504,6 @@ export default function UnifiedRemover() {
                 : fileType === 'image'
                 ? 'Download Cleaned PNG'
                 : 'Download Cleaned Video MP4'}
-            </button>
-          </div>
-
-          {/* Reset/Upload Another */}
-          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-            <button className="btn btn-secondary text-xs" onClick={handleReset}>
-              <Icon icon="ph:upload-simple" /> Upload Another File
             </button>
           </div>
         </div>
