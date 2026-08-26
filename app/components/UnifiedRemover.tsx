@@ -183,7 +183,7 @@ export default function UnifiedRemover() {
           const preset = getAdaptiveImagePreset(detection.presetKey, W, H);
 
           const newSliders: Sliders = {
-            gain: preset.gain,
+            gain: 0.6,
             scale: detection.sizeScale,
             offsetX: detection.offsetX,
             offsetY: detection.offsetY,
@@ -239,7 +239,7 @@ export default function UnifiedRemover() {
           const detection = detectVideoWatermarkCandidate(imageData, W, H, eng.engine.bg96);
 
           const newSliders: Sliders = {
-            gain: detection.gain,
+            gain: 0.6,
             scale: detection.sizeScale,
             offsetX: detection.offsetX,
             offsetY: detection.offsetY,
