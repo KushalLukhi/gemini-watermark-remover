@@ -190,8 +190,9 @@ export default function UnifiedRemover() {
           detectedRef.current = newSliders;
           setSliders(newSliders);
 
+          const is2x = Math.min(W, H) >= 1800 || Math.max(W, H) >= 2400;
           const aspectName = W === H ? '1:1 Square' : W > H ? `${Math.round((W / H) * 100) / 100}:1 Landscape` : `1:${Math.round((H / W) * 100) / 100} Portrait`;
-          setDetectBadge(`Gemini Imagen 3 Calibrated (${aspectName} • ${W}×${H})`);
+          setDetectBadge(`Gemini Imagen 3 Calibrated (${aspectName}${is2x ? ' • 2x High-Res' : ''} • ${W}×${H})`);
 
           setIsProcessing(false);
           renderTuner(frame, newSliders, 'image', eng.bg96);
@@ -341,31 +342,76 @@ export default function UnifiedRemover() {
     }
   }
 
+  // Global paste handler (Ctrl+V directly on page to replace/upload image)
+  useEffect(() => {
+    function handlePaste(e: ClipboardEvent) {
+      if (isProcessing) return;
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const pastedFile = items[i].getAsFile();
+          if (pastedFile) {
+            handleFileUpload(pastedFile);
+            break;
+          }
+        }
+      }
+    }
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, [isProcessing]);
+
   function handleReset() {
-    setFile(null);
-    setFileType(null);
-    setDetectBadge('');
-    setProgress(null);
-    previewFrameRef.current = null;
-    originalCanvasRef.current = null;
+    fileInputRef.current?.click();
   }
 
   return (
-    <section id="tool-dropzone" className="card">
-      {/* Unified Single Dropzone */}
+    <section
+      id="tool-dropzone"
+      className={`card relative${dragging ? ' drag-over' : ''}`}
+      onDragOver={(e) => {
+        e.preventDefault();
+        if (!isProcessing) setDragging(true);
+      }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragging(false);
+        if (isProcessing) return;
+        const dropped = e.dataTransfer.files[0];
+        if (dropped) handleFileUpload(dropped);
+      }}
+    >
+      {/* Hidden Global File Input */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*,video/*"
+        className="hidden"
+        onChange={(e) => {
+          if (e.target.files?.[0]) {
+            handleFileUpload(e.target.files[0]);
+            // Reset input so re-selecting same filename works
+            e.target.value = '';
+          }
+        }}
+      />
+
+      {/* Floating Drag-over Overlay when image is already loaded */}
+      {fileType && dragging && (
+        <div className="tuner-drag-overlay">
+          <Icon icon="ph:upload-simple-bold" width={48} className="text-indigo-600 animate-bounce" />
+          <p className="font-bold text-slate-800 text-lg">Drop to Replace Current Media</p>
+          <p className="text-sm text-slate-500">Supports PNG, JPG, WebP, MP4, WebM</p>
+        </div>
+      )}
+
+      {/* Unified Single Dropzone (Empty State) */}
       {!fileType && (
         <div
           className={`dropzone${dragging ? ' drag-over' : ''}${isProcessing ? ' loading' : ''}`}
           onClick={() => { if (!isProcessing) fileInputRef.current?.click(); }}
-          onDragOver={(e) => { e.preventDefault(); if (!isProcessing) setDragging(true); }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragging(false);
-            if (isProcessing) return;
-            const dropped = e.dataTransfer.files[0];
-            if (dropped) handleFileUpload(dropped);
-          }}
         >
           {isProcessing ? (
             <div className="dropzone-loader">
@@ -379,16 +425,9 @@ export default function UnifiedRemover() {
                 <Icon icon="ph:upload-simple-bold" width={32} />
               </div>
               <p className="dropzone-title">Upload or drag your Gemini Image or Veo 3 Video</p>
-              <p className="dropzone-sub">Supports PNG, JPG, WebP, MP4, WebM, MOV</p>
+              <p className="dropzone-sub">Supports PNG, JPG, WebP, MP4, WebM, MOV • Or paste with Ctrl+V</p>
             </>
           )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*,video/*"
-            className="hidden"
-            onChange={(e) => { if (e.target.files?.[0]) handleFileUpload(e.target.files[0]); }}
-          />
         </div>
       )}
 
@@ -404,7 +443,12 @@ export default function UnifiedRemover() {
               <span className="canvas-title">
                 <Icon icon="ph:frame-corners" width={14} /> Preview (Full Frame)
               </span>
-              <div className="main-canvas-wrapper">
+              <div
+                className="main-canvas-wrapper"
+                title="Click or drop a new image to replace"
+                onClick={() => fileInputRef.current?.click()}
+                style={{ cursor: 'pointer' }}
+              >
                 <canvas ref={mainCanvasRef} />
               </div>
             </div>
@@ -451,7 +495,7 @@ export default function UnifiedRemover() {
             <div className="tuner-sliders">
               {[
                 { label: 'Strength (Gain)', key: 'gain' as const, min: 0.1, max: 2.0, step: 0.05, fmt: (v: number) => `${v.toFixed(2)}x` },
-                { label: 'Size Scale', key: 'scale' as const, min: 0.5, max: 2.5, step: 0.01, fmt: (v: number) => `${v.toFixed(2)}x` },
+                { label: 'Size Scale', key: 'scale' as const, min: 0.1, max: 3.0, step: 0.01, fmt: (v: number) => `${v.toFixed(2)}x` },
                 { label: 'Position X', key: 'offsetX' as const, min: -Math.round(mediaDims.width * 0.45), max: Math.round(mediaDims.width * 0.2), step: 1, fmt: (v: number) => `${v}px` },
                 { label: 'Position Y', key: 'offsetY' as const, min: -Math.round(mediaDims.height * 0.45), max: Math.round(mediaDims.height * 0.2), step: 1, fmt: (v: number) => `${v}px` },
               ].map(({ label, key, min, max, step, fmt }) => (
@@ -486,7 +530,7 @@ export default function UnifiedRemover() {
 
           {/* Actions */}
           <div className="tuner-actions">
-            <button className="btn btn-secondary text-xs" onClick={handleReset}>
+            <button className="btn btn-secondary text-xs" onClick={() => fileInputRef.current?.click()}>
               <Icon icon="ph:upload-simple" width={14} /> Upload Another
             </button>
             <button
