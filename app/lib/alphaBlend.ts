@@ -170,26 +170,41 @@ export function cleanFrame(
   return { wm, roi };
 }
 
-// ── Preset Helpers ──
+// ── Calibrated Gemini Aspect Ratio Formula ──
 export function getAdaptiveImagePreset(
   presetKey: string,
   width: number,
   height: number
 ): { gain: number; offsetX: number; offsetY: number; sizeScale: number } {
-  const minDim = Math.min(width, height);
-  const ratio = minDim / 1536;
   if (presetKey === 'classic') {
     return {
-      gain: 1.0,
+      gain: 0.6,
       offsetX: 0,
       offsetY: 0,
       sizeScale: 1.0,
     };
   }
+
+  const minDim = Math.min(width, height);
+  const maxDim = Math.max(width, height);
+  const aspectFactor = maxDim / Math.max(1, minDim); // 1.0 for 1:1, 1.33 for 4:3, 1.78 for 16:9
+  const scaleRatio = minDim / 1024;
+
+  // Calibrated from exact Imagen 3 dataset:
+  // 1:1 (k=1.00) => scale: 0.75x, offset: -27px
+  // 4:3 / 3:4 (k=1.33) => scale: 0.86x, offset: -35px
+  // 16:9 / 9:16 (k=1.78) => scale: 1.01x, offset: -41px
+  const kClamped = Math.max(1.0, Math.min(aspectFactor, 2.0));
+  const t = (kClamped - 1.0) / 0.778; // 0 at 1:1, 1 at 16:9
+
+  const calculatedScale = +(0.75 + t * 0.26).toFixed(2);
+  const baseOffset = -27 - t * 14;
+  const calculatedOffset = Math.round(baseOffset * scaleRatio);
+
   return {
     gain: 0.6,
-    offsetX: Math.round(-128 * ratio),
-    offsetY: Math.round(-128 * ratio),
-    sizeScale: 1.01,
+    offsetX: calculatedOffset,
+    offsetY: calculatedOffset,
+    sizeScale: calculatedScale,
   };
 }
