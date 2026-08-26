@@ -179,23 +179,19 @@ export default function UnifiedRemover() {
           const frame: FrameData = { width: W, height: H, imageData };
           previewFrameRef.current = frame;
 
-          const detection = detectWatermarkCandidate(imageData, W, H, eng.bg96);
-          const preset = getAdaptiveImagePreset(detection.presetKey, W, H);
+          const preset = getAdaptiveImagePreset('new', W, H);
 
           const newSliders: Sliders = {
             gain: 0.6,
-            scale: detection.sizeScale,
-            offsetX: detection.offsetX,
-            offsetY: detection.offsetY,
+            scale: preset.sizeScale,
+            offsetX: preset.offsetX,
+            offsetY: preset.offsetY,
           };
           detectedRef.current = newSliders;
           setSliders(newSliders);
 
-          if (detection.matchFound) {
-            setDetectBadge(`Auto-Detected: ${detection.name} (${Math.round(detection.score * 100)}% match)`);
-          } else {
-            setDetectBadge(`Standard Preset Applied (${detection.name})`);
-          }
+          const aspectName = W === H ? '1:1 Square' : W > H ? `${Math.round((W / H) * 100) / 100}:1 Landscape` : `1:${Math.round((H / W) * 100) / 100} Portrait`;
+          setDetectBadge(`Gemini Imagen 3 Calibrated (${aspectName} • ${W}×${H})`);
 
           setIsProcessing(false);
           renderTuner(frame, newSliders, 'image', eng.bg96);

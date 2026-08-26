@@ -187,24 +187,41 @@ export function getAdaptiveImagePreset(
 
   const minDim = Math.min(width, height);
   const maxDim = Math.max(width, height);
-  const aspectFactor = maxDim / Math.max(1, minDim); // 1.0 for 1:1, 1.33 for 4:3, 1.78 for 16:9
-  const scaleRatio = minDim / 1024;
+  const aspectFactor = maxDim / Math.max(1, minDim);
 
-  // Calibrated from exact Imagen 3 dataset:
-  // 1:1 (k=1.00) => scale: 0.75x, offset: -27px
-  // 4:3 / 3:4 (k=1.33) => scale: 0.86x, offset: -35px
-  // 16:9 / 9:16 (k=1.78) => scale: 1.01x, offset: -41px
-  const kClamped = Math.max(1.0, Math.min(aspectFactor, 2.0));
-  const t = (kClamped - 1.0) / 0.778; // 0 at 1:1, 1 at 16:9
+  // Exact calibrated Imagen 3 settings:
+  // 16:9 / 9:16 (1792x1024 / 1024x1792, ratio ~1.75 - 1.78)
+  // 3:2 / 2:3   (1536x1024 / 1024x1536, ratio ~1.50)
+  // 4:3 / 3:4   (1408x1056 / 1344x1008 / 1008x1344, ratio ~1.33)
+  // 1:1 Square  (1024x1024 / 1536x1536, ratio ~1.00)
+  let scale = 0.75;
+  let offset = -27;
 
-  const calculatedScale = +(0.75 + t * 0.26).toFixed(2);
-  const baseOffset = -27 - t * 14;
-  const calculatedOffset = Math.round(baseOffset * scaleRatio);
+  if (aspectFactor >= 1.65) {
+    // 16:9 / 9:16
+    scale = 1.01;
+    offset = -41;
+  } else if (aspectFactor >= 1.42) {
+    // 3:2 / 2:3
+    scale = 0.92;
+    offset = -38;
+  } else if (aspectFactor >= 1.18) {
+    // 4:3 / 3:4
+    scale = 0.86;
+    offset = -35;
+  } else {
+    // 1:1 Square
+    scale = 0.75;
+    offset = -27;
+  }
+
+  const scaleRatio = minDim >= 1400 ? minDim / 1024 : 1;
+  const finalOffset = Math.round(offset * scaleRatio);
 
   return {
     gain: 0.6,
-    offsetX: calculatedOffset,
-    offsetY: calculatedOffset,
-    sizeScale: calculatedScale,
+    offsetX: finalOffset,
+    offsetY: finalOffset,
+    sizeScale: scale,
   };
 }
