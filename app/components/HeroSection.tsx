@@ -7,8 +7,8 @@ export default function HeroSection() {
         <h1 className="hero-title">Free Gemini Watermark Remover Online</h1>
         <p className="hero-description">
           The fastest way to <strong>remove Gemini watermark</strong> and erase Google AI logo sparkles from your{' '}
-          <strong style={{ color: '#64748b' }}>images and Veo 3 videos</strong>. 100% free, secure, and processed completely inside
-          your browser with <strong style={{ color: '#64748b' }}>zero quality loss</strong>.
+          <strong>images and Veo 3 videos</strong>. 100% free, secure, and processed completely inside
+          your browser with <strong>zero quality loss</strong>.
         </p>
       </div>
 

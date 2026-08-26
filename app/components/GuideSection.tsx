@@ -37,7 +37,7 @@ export default function GuideSection() {
             </li>
           </ol>
           <div className="method-action">
-            <a href="#panel-image" className="btn btn-primary method-btn">
+            <a href="#tool-dropzone" className="btn btn-primary method-btn">
               <Icon icon="ph:arrow-up-bold" width={16} />
               <span>Use Free Gemini Watermark Remover</span>
             </a>

@@ -352,7 +352,7 @@ export default function UnifiedRemover() {
   }
 
   return (
-    <section className="card">
+    <section id="tool-dropzone" className="card">
       {/* Unified Single Dropzone */}
       {!fileType && (
         <div

@@ -13,7 +13,12 @@ export default function Footer() {
         <div className="footer-content">
           <p className="footer-credit">
             Designed &amp; Developed by{' '}
-            <a href="https://ishara-madu.github.io/" target="_blank" rel="noopener noreferrer" className="footer-author-link">
+            <a
+              href="https://ishara-madu.github.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-author-link"
+            >
               <strong>Ishara M.</strong>
             </a>
           </p>
@@ -26,15 +31,19 @@ export default function Footer() {
               Terms of Service
             </button>
             <span className="footer-dot">•</span>
-            <a href="https://github.com/ishara-madu/gemini-watermark-remover" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <Icon icon="ph:github-logo-bold" width={14} /> GitHub
-            </a>
-            <span className="footer-dot">•</span>
-            <a href="https://buymeacoffee.com/ishara.madu" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <Icon icon="ph:heart-fill" width={14} style={{ color: '#f43f5e' }} /> Support
+            <a
+              href="https://buymeacoffee.com/ishara.madu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-support-btn"
+            >
+              <Icon icon="ph:coffee-bold" width={15} className="text-amber-600" />
+              <span>Buy Me a Coffee</span>
             </a>
           </div>
-          <p className="footer-sub">100% Free &amp; Private • All media processed locally in your browser</p>
+          <p className="footer-sub">
+            100% Free, Private &amp; Open-Architecture • All media processed locally in your browser with zero server uploads
+          </p>
         </div>
       </footer>
 
@@ -44,12 +53,12 @@ export default function Footer() {
           <h3 className="modal-title">Privacy Policy</h3>
           <p className="modal-text mb-2">
             Gemini Watermark Remover values your privacy above all else. This application runs{' '}
-            <strong>100% locally</strong> in your web browser using HTML5 Canvas and WebCodecs technologies.
+            <strong>100% locally</strong> in your web browser using client-side HTML5 Canvas and WebCodecs technologies.
           </p>
           <p className="modal-text mb-4">
             • <strong>Zero Server Uploads:</strong> None of your uploaded images or videos are transmitted to external servers.<br />
-            • <strong>No Data Collection:</strong> We do not track personal data, store cookies, or monitor media processing.<br />
-            • <strong>Session Storage:</strong> Active tab preferences are stored locally on your device only for session duration.
+            • <strong>No Data Collection:</strong> We do not track personal data, store tracking cookies, or monitor media processing.<br />
+            • <strong>Local Session Memory:</strong> Sliders and active preferences are stored locally in your browser only for the current session.
           </p>
           <button type="button" className="btn btn-secondary text-xs" onClick={() => privacyRef.current?.close()}>
             Close
@@ -61,7 +70,9 @@ export default function Footer() {
       <dialog ref={termsRef} className="app-modal">
         <div className="modal-box">
           <h3 className="modal-title">Terms of Service</h3>
-          <p className="modal-text mb-2">Gemini Watermark Remover is provided as a free utility for personal media editing and research.</p>
+          <p className="modal-text mb-2">
+            Gemini Watermark Remover is provided as a free utility for personal media editing, research, and creative workflows.
+          </p>
           <p className="modal-text mb-4">
             • <strong>User Responsibility:</strong> Users are solely responsible for ensuring their media editing complies with Google&apos;s Terms of Service and applicable copyright laws.<br />
             • <strong>No Warranty:</strong> This software is provided &quot;as is&quot; without warranty of any kind, express or implied.
