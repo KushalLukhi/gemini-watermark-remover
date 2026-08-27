@@ -4,7 +4,7 @@
 
 ## Overview
 - **Name**: Gemini Watermark Remover
-- **Website**: https://gemini-watermark-remover.vercel.app
+- **Website**: https://geminiremove.com
 - **License**: Free & Open to use, unlimited client-side processing
 - **Key Functionality**: Removes the semi-transparent 4-point sparkle watermark from images (PNG, JPG, WebP) and videos (MP4, WebM, MOV) using mathematical inverse alpha unblending.
 
