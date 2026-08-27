@@ -18,7 +18,7 @@ export default function SynthIdComparison() {
       feature: 'Embedding Layer',
       visibleLogo: 'Alpha channel overlay on top pixels',
       synthId: 'Interleaved digital signal in pixel/audio noise',
-      icon: 'ph:layers-bold',
+      icon: 'ph:stack-bold',
     },
     {
       feature: 'Removal Method',

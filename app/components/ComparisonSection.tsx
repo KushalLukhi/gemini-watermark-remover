@@ -62,8 +62,8 @@ export default function ComparisonSection() {
             {/* AFTER (clean) — full background */}
             <div className="compare-panel compare-after">
               <Image
-                src="/assets/after.webp"
-                alt="Dog photo after Gemini watermark removal — clean with zero blur"
+                src="/assets/after_pup.jpg"
+                alt="Golden retriever photo after Gemini watermark removal — clean with zero blur"
                 fill
                 style={{ objectFit: 'cover' }}
                 priority
@@ -77,8 +77,8 @@ export default function ComparisonSection() {
               style={{ clipPath: `inset(0 ${100 - sliderX}% 0 0)` }}
             >
               <Image
-                src="/assets/before.webp"
-                alt="Dog photo before watermark removal — visible Gemini sparkle logo in corner"
+                src="/assets/before_pup.jpg"
+                alt="Golden retriever photo before watermark removal — visible Gemini sparkle logo in corner"
                 fill
                 style={{ objectFit: 'cover' }}
                 priority

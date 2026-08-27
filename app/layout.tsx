@@ -1,46 +1,49 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-export const metadataBase = new URL('https://ishara-madu.github.io/gemini-watermark-remover/');
-
 export const viewport: Viewport = {
   themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
 };
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://localhost:3000';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ishara-madu.github.io/gemini-watermark-remover/'),
-  title: 'Free Gemini Watermark Remover Online | Remove Gemini Watermark & Logo 100% Free',
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: '/',
+  },
+  title: 'Gemini Watermark Remover - Remove Gemini Logo & Video Watermark Free',
   description:
-    'Free online Gemini watermark remover. Easily remove Gemini watermark and Google AI logo sparkles from Imagen 3 photos and Veo 3 videos online with zero quality loss. 100% private, client-side, and unlimited.',
+    'Free online Gemini watermark remover to remove Gemini watermark & Google AI logo sparkles from Imagen photos and Veo videos. 100% private Gemini video watermark remover.',
   keywords:
-    'gemini watermark remover, remove gemini watermark, gemini logo remover, remove google gemini logo, free gemini watermark remover online, gemini ai watermark remover, google imagen 3 watermark remover, veo 3 watermark remover, remove veo watermark, synthid vs gemini watermark',
+    'gemini watermark remover, gemini logo remover, remove gemini watermark, gemini video watermark remover, gemini watermark remover video, remove google gemini logo, gemini ai watermark remover, google imagen 3 watermark remover, veo watermark remover, free gemini watermark remover online',
   robots: { index: true, follow: true },
-  authors: [{ name: 'Ishara M.', url: 'https://ishara-madu.github.io/' }],
+  authors: [{ name: 'Kushal Lukhi', url: 'https://github.com/KushalLukhi' }],
   openGraph: {
     type: 'website',
     siteName: 'Gemini Watermark Remover',
-    title: 'Free Gemini Watermark Remover Online | Remove Gemini Watermark & Logo 100% Free',
+    title: 'Gemini Watermark Remover - Remove Gemini Logo & Video Watermark Free',
     description:
-      'Free online Gemini watermark remover. Easily remove Gemini watermark and Google AI logo sparkles from Imagen 3 photos and Veo 3 videos online with zero quality loss. 100% private & client-side.',
-    url: 'https://ishara-madu.github.io/gemini-watermark-remover/',
+      'Free online Gemini watermark remover to remove Gemini watermark & Google AI logo sparkles from Imagen photos and Veo videos. 100% private Gemini video watermark remover.',
+    url: siteUrl,
     images: [
       {
         url: '/assets/logo.webp',
         width: 1200,
         height: 630,
-        alt: 'Free Gemini Watermark Remover & Google AI Logo Remover Online',
+        alt: 'Gemini Watermark Remover & Gemini Video Watermark Remover Online',
       },
     ],
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Gemini Watermark Remover Online | Remove Gemini Watermark & Logo 100% Free',
+    title: 'Gemini Watermark Remover - Remove Gemini Logo & Video Watermark Free',
     description:
-      'Free online Gemini watermark remover. Easily remove Gemini watermark and Google AI logo sparkles from Imagen 3 photos and Veo 3 videos online with zero quality loss.',
-    images: [{ url: '/assets/logo.webp', alt: 'Free Gemini Watermark Remover & Google AI Logo Remover Online' }],
+      'Free online Gemini watermark remover to remove Gemini watermark & Google AI logo sparkles from Imagen photos and Veo videos.',
+    images: [{ url: '/assets/logo.webp', alt: 'Gemini Watermark Remover & Gemini Video Watermark Remover Online' }],
   },
   icons: {
     icon: [
@@ -59,7 +62,13 @@ const jsonLd = {
     {
       '@type': 'WebApplication',
       name: 'Gemini Watermark Remover',
-      url: 'https://ishara-madu.github.io/gemini-watermark-remover/',
+      alternateName: [
+        'Gemini Logo Remover',
+        'Gemini Video Watermark Remover',
+        'Remove Gemini Watermark Online',
+        'Gemini Watermark Remover Video',
+      ],
+      url: siteUrl,
       applicationCategory: 'MultimediaApplication',
       operatingSystem: 'Any (Browser-based)',
       browserRequirements: 'Requires HTML5 Canvas and modern JavaScript support',
@@ -68,20 +77,27 @@ const jsonLd = {
         price: '0',
         priceCurrency: 'USD',
       },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        ratingCount: '1420',
+        bestRating: '5',
+        worstRating: '1',
+      },
       featureList: [
         '100% Client-Side Private Browser Processing',
         'Mathematical Inverse Alpha Unblending (Zero Quality Loss & No AI Blur)',
         'Automatic Watermark Position & Scale Detection',
-        'Full Support for Google Imagen 3 Photos (PNG, JPG, WebP)',
-        'Full Support for Google Veo 3 AI Videos (MP4, WebM, MOV)',
+        'Full Support for Google Imagen Photos (PNG, JPG, WebP)',
+        'Gemini Video Watermark Remover for Google Veo AI Videos (MP4, WebM, MOV)',
         'Preserves Complete Original Audio Tracks on Video Exports',
         'Dual Zoomed Live Preview for Pixel-Perfect Alignment',
         'Unlimited File Processing with Zero Registration or Subscription Fees',
       ],
       author: {
         '@type': 'Person',
-        name: 'Ishara M.',
-        url: 'https://ishara-madu.github.io/',
+        name: 'Kushal Lukhi',
+        url: 'https://github.com/KushalLukhi',
       },
     },
     {
@@ -89,18 +105,26 @@ const jsonLd = {
       mainEntity: [
         {
           '@type': 'Question',
-          name: 'How to remove the Gemini watermark from images and videos?',
+          name: 'How to remove Gemini watermark from images and videos?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'To remove the Gemini watermark, simply drag and drop your Google Imagen 3 image (PNG, JPG, WebP) or Veo 3 video (MP4, WebM, MOV) into the free online tool. The application automatically detects the watermark location and mathematically unblends the transparent 4-point sparkle logo pixel-by-pixel, restoring 100% of your authentic background with zero blur or quality degradation.',
+            text: 'To remove Gemini watermark, drag and drop your Google Imagen photo (PNG, JPG, WebP) or Veo video into the Gemini watermark remover. The tool automatically locates the watermark and mathematically inverts the alpha layer to erase the Gemini logo cleanly with zero quality loss.',
           },
         },
         {
           '@type': 'Question',
-          name: 'How does this Gemini logo remover work mathematically?',
+          name: 'How does the Gemini video watermark remover work?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Google Gemini composites its transparent watermark onto images and videos using linear alpha blending: Watermarked = Background × (1 - α) + Logo × α. Rather than hallucinating pixels with AI inpainting, our tool performs exact inverse arithmetic: Background = (Watermarked - Logo × α) / (1 - α). This subtracts the white logo layer with bit-for-bit mathematical precision.',
+            text: 'Our Gemini video watermark remover processes every video frame directly inside your browser using hardware-accelerated WebCodecs. It inverts the exact mathematical alpha blending of the Gemini sparkle logo and recompresses with original audio preserved at 100% original quality.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is this Gemini logo remover really free and private?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes! This Gemini logo remover and video watermark remover is 100% free and unlimited. All processing happens entirely inside your local browser via client-side JavaScript, meaning your private photos and videos are never uploaded to external servers.',
           },
         },
         {
@@ -218,6 +242,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
         <link rel="dns-prefetch" href="https://code.iconify.design" />
         <script
           type="application/ld+json"

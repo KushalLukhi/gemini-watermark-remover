@@ -424,8 +424,8 @@ export default function UnifiedRemover() {
               <div className="dropzone-icon">
                 <Icon icon="ph:upload-simple-bold" width={32} />
               </div>
-              <p className="dropzone-title">Upload or drag your Gemini Image or Veo 3 Video</p>
-              <p className="dropzone-sub">Supports PNG, JPG, WebP, MP4, WebM, MOV • Or paste with Ctrl+V</p>
+              <p className="dropzone-title">Upload or drag your Gemini Image or Veo Video</p>
+              <p className="dropzone-sub">Free Gemini watermark remover &amp; Gemini video watermark remover • Supports PNG, JPG, WebP, MP4, WebM, MOV • Paste with Ctrl+V</p>
             </>
           )}
         </div>

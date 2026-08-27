@@ -170,7 +170,7 @@ export function cleanFrame(
   return { wm, roi };
 }
 
-// ── Calibrated Gemini Aspect Ratio Formula ──
+// ── Exact Calibrated Gemini Aspect Ratio Presets ──
 export function getAdaptiveImagePreset(
   presetKey: string,
   width: number,
@@ -191,7 +191,7 @@ export function getAdaptiveImagePreset(
 
   const is2x = minDim >= 1800 || maxDim >= 2400;
 
-  // ── 2x Upscaled / Double-Resolution Calibrated Presets ──
+  // ── 2x Upscaled / High-Resolution Tested Presets ──
   if (is2x) {
     let scale2x = 0.38;
     let offset2x = 25;
@@ -222,36 +222,32 @@ export function getAdaptiveImagePreset(
     };
   }
 
-  // ── 1x Standard Calibrated Presets ──
-  // 16:9 / 9:16 (1792x1024 / 1024x1792, ratio ~1.75 - 1.78)
-  // 3:2 / 2:3   (1536x1024 / 1024x1536, ratio ~1.50)
-  // 4:3 / 3:4   (1408x1056 / 1344x1008 / 1008x1344, ratio ~1.33)
-  // 1:1 Square  (1024x1024, ratio ~1.00)
-  let scale = 0.75;
-  let offset = -27;
+  // ── 1x Standard Tested Presets ──
+  let scale1x = 0.75;
+  let offset1x = -27;
 
   if (aspectFactor >= 1.65) {
-    // 16:9 / 9:16
-    scale = 1.01;
-    offset = -41;
+    // 16:9 / 9:16 (1792x1024 / 1024x1792)
+    scale1x = 1.01;
+    offset1x = -41;
   } else if (aspectFactor >= 1.42) {
-    // 3:2 / 2:3
-    scale = 0.92;
-    offset = -38;
+    // 3:2 / 2:3 (1536x1024 / 1024x1536)
+    scale1x = 0.92;
+    offset1x = -38;
   } else if (aspectFactor >= 1.18) {
-    // 4:3 / 3:4
-    scale = 0.86;
-    offset = -35;
+    // 4:3 / 3:4 (1408x1056 / 1344x1008 / 1008x1344)
+    scale1x = 0.86;
+    offset1x = -35;
   } else {
-    // 1:1 Square
-    scale = 0.75;
-    offset = -27;
+    // 1:1 Square (1024x1024)
+    scale1x = 0.75;
+    offset1x = -27;
   }
 
   return {
     gain: 0.6,
-    offsetX: offset,
-    offsetY: offset,
-    sizeScale: scale,
+    offsetX: offset1x,
+    offsetY: offset1x,
+    sizeScale: scale1x,
   };
 }
