@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gemini Watermark Remover & Gemini Video Watermark Remover 🌟
 
-## Getting Started
+[![Live Website](https://img.shields.io/badge/Live_Tool-geminiremove.com-4f46e5?style=for-the-badge&logo=googlechrome)](https://geminiremove.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Next.js 16](https://img.shields.io/badge/Framework-Next.js_16-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
 
-First, run the development server:
+👉 **Try the Live Tool Free**: [https://geminiremove.com](https://geminiremove.com)
+
+A free, 100% private, client-side web application to remove Gemini watermarks and Google AI sparkle logos from Google Imagen photos and Google Veo 3 AI videos with zero quality loss and original audio preserved.
+
+---
+
+## 🔥 Key Features
+
+- **100% Client-Side Privacy**: All processing runs locally inside your browser using HTML5 Canvas and WebCodecs. No images or videos are ever uploaded to external servers.
+- **Mathematical Inverse Alpha Unblending**: Instead of blurry AI generative fill or inpainting, this tool reverses the exact linear alpha compositing equation:
+  $$\text{Background} = \frac{\text{Watermarked} - \text{Logo} \times \alpha}{1 - \alpha}$$
+  This restores 100% of the authentic original background pixels under the transparent watermark with zero blur or degradation.
+- **Gemini Video Watermark Remover**: Hardware-accelerated WebCodecs frame-by-frame processing for Google Veo AI videos (MP4, WebM, MOV) with 100% audio track passthrough.
+- **Dual Zoomed Live Preview**: Side-by-side 4x magnified preview windows for sub-pixel alignment over the 4-point sparkle logo.
+- **100% Free & Unlimited**: No subscriptions, no registration, no file limits, and no added promotional watermarks.
+
+---
+
+## 🛠️ Built With
+
+- **Framework**: [Next.js 16](https://nextjs.org) (App Router)
+- **Styling**: Tailwind CSS & Vanilla CSS Design System
+- **Processing**: HTML5 Canvas API, WebCodecs, WebAssembly
+- **Deployment**: [Vercel](https://vercel.com) Edge Network
+
+---
+
+## 💻 Local Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/KushalLukhi/gemini-watermark-remover.git
+
+# Navigate into project directory
+cd gemini-watermark-remover
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to view the application locally.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📄 License
 
-## Learn More
+This project is open-source under the [MIT License](LICENSE).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed with ❤️ by [Kushal Lukhi](https://github.com/KushalLukhi).  
+Official Website: [https://geminiremove.com](https://geminiremove.com)
