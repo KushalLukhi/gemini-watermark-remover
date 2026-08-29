@@ -2017,7 +2017,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 200px;
   gap: 0.85rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 .tuner-canvas-box {
@@ -2044,14 +2044,13 @@ body {
   object-fit: contain;
 }
 
-/* Right column — stacked zoom cards aligned to top & bottom of image */
+/* Right column — stacked zoom cards grouped tightly */
 .tuner-zoom-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.65rem;
   width: 200px;
-  height: 100%;
+  align-self: start;
 }
 
 .zoom-card {
@@ -2064,10 +2063,6 @@ body {
   gap: 0.35rem;
   height: fit-content;
   flex: none;
-}
-
-.zoom-card:last-child {
-  margin-top: auto;
 }
 
 .zoom-card .canvas-wrapper {
