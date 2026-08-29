@@ -250,7 +250,7 @@ export default function ImageRemover() {
                   <Icon icon="ph:magnifying-glass-plus" width={14} /> Zoomed Original
                 </span>
                 <div className="canvas-wrapper">
-                  <canvas ref={zoomOrigRef} id="img-zoom-canvas" width={200} height={200} />
+                  <canvas ref={zoomOrigRef} id="img-zoom-canvas" width={160} height={160} />
                 </div>
               </div>
               <div className="zoom-card">
@@ -258,7 +258,7 @@ export default function ImageRemover() {
                   <Icon icon="ph:check-circle" width={14} /> Zoomed Cleaned
                 </span>
                 <div className="canvas-wrapper">
-                  <canvas ref={zoomCleanRef} id="img-zoom-cleaned-canvas" width={200} height={200} />
+                  <canvas ref={zoomCleanRef} id="img-zoom-cleaned-canvas" width={160} height={160} />
                 </div>
               </div>
             </div>

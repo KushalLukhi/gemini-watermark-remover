@@ -607,7 +607,7 @@ body {
 }
 
 .zoom-card .canvas-wrapper {
-  height: 180px;
+  height: 144px;
   width: 100%;
 }
 
@@ -2006,8 +2006,8 @@ body {
 /* ── Tuner Preview Row (main canvas + zoom pair side-by-side) ── */
 .tuner-preview-row {
   display: grid;
-  grid-template-columns: 1fr 260px;
-  gap: 1rem;
+  grid-template-columns: 1fr 208px;
+  gap: 0.85rem;
   align-items: stretch;
 }
 
@@ -2035,32 +2035,36 @@ body {
   object-fit: contain;
 }
 
-/* Right column — stacked zoom cards */
+/* Right column — stacked zoom cards (20% smaller) */
 .tuner-zoom-col {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  width: 208px;
 }
 
 .zoom-card {
   background: #ffffff;
   border: 1px solid var(--bg-card-border);
   border-radius: var(--radius-lg);
-  padding: 0.65rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
   flex: 1;
 }
 
 .zoom-card .canvas-wrapper {
   flex: 1;
+  max-height: 150px;
 }
 
 .zoom-card canvas {
   width: 100%;
-  height: 100%;
+  max-height: 150px;
   display: block;
+  border-radius: var(--radius-sm, 6px);
+  object-fit: contain;
 }
 
 .canvas-title {

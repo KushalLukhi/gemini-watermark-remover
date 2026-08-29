@@ -535,7 +535,7 @@ export default function UnifiedRemover() {
                   <Icon icon="ph:magnifying-glass-plus" width={14} /> Zoomed Original
                 </span>
                 <div className="canvas-wrapper">
-                  <canvas ref={zoomOrigRef} width={200} height={200} />
+                  <canvas ref={zoomOrigRef} width={160} height={160} />
                 </div>
               </div>
               <div className="zoom-card">
@@ -543,7 +543,7 @@ export default function UnifiedRemover() {
                   <Icon icon="ph:check-circle" width={14} /> Zoomed Cleaned
                 </span>
                 <div className="canvas-wrapper">
-                  <canvas ref={zoomCleanRef} width={200} height={200} />
+                  <canvas ref={zoomCleanRef} width={160} height={160} />
                 </div>
               </div>
             </div>
