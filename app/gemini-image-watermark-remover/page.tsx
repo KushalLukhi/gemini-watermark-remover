@@ -48,19 +48,15 @@ export default function GeminiImageWatermarkRemoverPage() {
       />
       <Header />
       <main className="container">
-        <section className="hero-section">
-          <div className="hero-badge">
-            <Icon icon="ph:image-square-bold" width={16} />
-            <span>Pixel-Perfect Image Engine</span>
-          </div>
+        <div className="hero-section">
           <h1 className="hero-title">
-            Gemini Image Watermark Remover
+            Gemini <span className="hero-title-gradient">Image Watermark Remover</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-description">
             Remove the 4-pointed Gemini sparkle logo from <strong>Google Gemini AI images</strong> with zero blur.
             Restores 100% authentic background pixels in full resolution with complete client-side privacy.
           </p>
-        </section>
+        </div>
 
         <TrustStrip />
         <UnifiedRemover />

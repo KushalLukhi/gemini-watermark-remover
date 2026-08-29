@@ -60,18 +60,14 @@ export default function HowToRemoveGeminiWatermarkPage() {
       />
       <Header />
       <main className="container">
-        <section className="hero-section">
-          <div className="hero-badge">
-            <Icon icon="ph:book-open-text-bold" width={16} />
-            <span>Complete Tutorial Guide</span>
-          </div>
+        <div className="hero-section">
           <h1 className="hero-title">
-            How to Remove Gemini Watermarks
+            How to <span className="hero-title-gradient">Remove Gemini Watermarks</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-description">
             A simple, step-by-step guide to removing visible 4-point sparkle logos from <strong>Google Gemini images and Veo videos</strong> for free in seconds.
           </p>
-        </section>
+        </div>
 
         <TrustStrip />
 

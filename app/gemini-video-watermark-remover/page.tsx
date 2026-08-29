@@ -47,19 +47,15 @@ export default function GeminiVideoWatermarkRemoverPage() {
       />
       <Header />
       <main className="container">
-        <section className="hero-section">
-          <div className="hero-badge">
-            <Icon icon="ph:video-camera-bold" width={16} />
-            <span>Dedicated Video Engine</span>
-          </div>
+        <div className="hero-section">
           <h1 className="hero-title">
-            Gemini Video Watermark Remover
+            Gemini <span className="hero-title-gradient">Video Watermark Remover</span>
           </h1>
-          <p className="hero-subtitle">
+          <p className="hero-description">
             Clean <strong>Google Gemini &amp; Veo AI video watermarks</strong> frame-by-frame in your browser.
             Preserves 100% of your original audio tracks, color grading, and video clarity with zero server uploads.
           </p>
-        </section>
+        </div>
 
         <TrustStrip />
         <UnifiedRemover />
