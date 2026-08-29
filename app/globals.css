@@ -2017,7 +2017,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 200px;
   gap: 0.85rem;
-  align-items: start;
+  align-items: end;
 }
 
 .tuner-canvas-box {
@@ -2044,13 +2044,13 @@ body {
   object-fit: contain;
 }
 
-/* Right column — stacked zoom cards grouped tightly */
+/* Right column — stacked zoom cards anchored to the bottom */
 .tuner-zoom-col {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
   width: 200px;
-  align-self: start;
+  align-self: end;
 }
 
 .zoom-card {
