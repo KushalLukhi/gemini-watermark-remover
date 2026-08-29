@@ -11,15 +11,15 @@ export default function Footer() {
       <footer className="app-footer">
         <div className="footer-content">
           <div className="footer-links flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-slate-500 mb-2">
-            <a href="/" className="hover:text-indigo-600 transition-colors">Home</a>
+            <a href="/" className="hover:text-indigo-600 transition-colors font-semibold">Home</a>
             <span className="footer-dot">•</span>
-            <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How It Works</a>
+            <a href="/gemini-image-watermark-remover" className="hover:text-indigo-600 transition-colors">Gemini Image Remover</a>
             <span className="footer-dot">•</span>
-            <a href="#comparison" className="hover:text-indigo-600 transition-colors">Before &amp; After</a>
+            <a href="/gemini-video-watermark-remover" className="hover:text-indigo-600 transition-colors">Gemini Video Remover</a>
             <span className="footer-dot">•</span>
-            <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+            <a href="/how-to-remove-gemini-watermark" className="hover:text-indigo-600 transition-colors">How-To Guide</a>
             <span className="footer-dot">•</span>
-            <a href="#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
+            <a href="/#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
             <span className="footer-dot">•</span>
             <a
               href="#privacy"
