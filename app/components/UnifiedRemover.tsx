@@ -34,6 +34,7 @@ export default function UnifiedRemover() {
   const [exporting, setExporting] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
   const [showSliders, setShowSliders] = useState(false);
+  const [viewMode, setViewMode] = useState<'after' | 'before'>('after');
 
   // Engines
   const [imgEngine, setImgEngine] = useState<WatermarkEngine | null>(null);
@@ -64,7 +65,7 @@ export default function UnifiedRemover() {
 
   // ── Exact Full-Res Tuner Renderer (from source repo) ──
   const renderTuner = useCallback(
-    (currentFrame: FrameData, currentSliders: Sliders, type: 'image' | 'video', bgImg: HTMLImageElement) => {
+    (currentFrame: FrameData, currentSliders: Sliders, type: 'image' | 'video', bgImg: HTMLImageElement, mode: 'after' | 'before' = viewMode) => {
       const mainCanvas = mainCanvasRef.current;
       const zoomCanvas = zoomOrigRef.current;
       const zoomCleanedCanvas = zoomCleanRef.current;
@@ -106,10 +107,14 @@ export default function UnifiedRemover() {
       mainCanvas.style.width = '100%';
       mainCanvas.style.height = 'auto';
       const mctx = mainCanvas.getContext('2d')!;
-      mctx.drawImage(offscreen, 0, 0, mainCanvas.width, mainCanvas.height);
-      mctx.strokeStyle = '#6366f1';
-      mctx.lineWidth = 2;
-      mctx.strokeRect(wm.x * scale, wm.y * scale, wm.width * scale, wm.height * scale);
+      if (mode === 'before' && originalCanvasRef.current) {
+        mctx.drawImage(originalCanvasRef.current, 0, 0, mainCanvas.width, mainCanvas.height);
+      } else {
+        mctx.drawImage(offscreen, 0, 0, mainCanvas.width, mainCanvas.height);
+        mctx.strokeStyle = '#6366f1';
+        mctx.lineWidth = 2;
+        mctx.strokeRect(wm.x * scale, wm.y * scale, wm.width * scale, wm.height * scale);
+      }
 
       // Zoomed Original (directly from full-res source)
       if (zoomCanvas && originalCanvasRef.current) {
@@ -147,6 +152,22 @@ export default function UnifiedRemover() {
     },
     []
   );
+
+  // ── Sample Image Loader ──
+  async function handleLoadSample(e: React.MouseEvent) {
+    e.stopPropagation();
+    if (isProcessing) return;
+    try {
+      setIsProcessing(true);
+      const res = await fetch('/assets/before_pup.jpg');
+      const blob = await res.blob();
+      const sampleFile = new File([blob], 'sample_gemini_dog.jpg', { type: 'image/jpeg' });
+      await handleFileUpload(sampleFile);
+    } catch (err) {
+      setIsProcessing(false);
+      console.error('Failed to load sample image:', err);
+    }
+  }
 
   // ── Unified Auto-Detect Upload Handler ──
   async function handleFileUpload(uploadedFile: File) {
@@ -426,6 +447,18 @@ export default function UnifiedRemover() {
               </div>
               <p className="dropzone-title">Upload or drag your Gemini Image or Veo Video</p>
               <p className="dropzone-sub">Free Gemini watermark remover &amp; Gemini video watermark remover • Supports PNG, JPG, WebP, MP4, WebM, MOV • Paste with Ctrl+V</p>
+
+              {/* Sample Demo Image Button */}
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleLoadSample}
+                  className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50/90 px-4 py-2 text-xs font-semibold text-indigo-700 shadow-sm transition-all hover:border-indigo-400 hover:bg-indigo-100 hover:shadow-md hover:scale-[1.02] active:scale-95"
+                >
+                  <Icon icon="ph:image-square-bold" width={16} className="text-indigo-600" />
+                  <span>Try Sample Image (Golden Retriever)</span>
+                </button>
+              </div>
             </>
           )}
         </div>
@@ -440,9 +473,51 @@ export default function UnifiedRemover() {
           <div className="tuner-preview-row">
             {/* Main Canvas */}
             <div className="tuner-canvas-box main-box">
-              <span className="canvas-title">
-                <Icon icon="ph:frame-corners" width={14} /> Preview (Full Frame)
-              </span>
+              <div className="flex items-center justify-between gap-2 mb-2 w-full">
+                <span className="canvas-title">
+                  <Icon icon="ph:frame-corners" width={14} /> Preview (Full Frame)
+                </span>
+
+                {/* Before / After Toggle for Image */}
+                {fileType === 'image' && (
+                  <div className="inline-flex items-center rounded-lg bg-slate-100 p-1 border border-slate-200 shadow-inner">
+                    <button
+                      type="button"
+                      className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${
+                        viewMode === 'after'
+                          ? 'bg-indigo-600 text-white shadow'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewMode('after');
+                        if (previewFrameRef.current && imgEngine) {
+                          renderTuner(previewFrameRef.current, sliders, 'image', imgEngine.bg96, 'after');
+                        }
+                      }}
+                    >
+                      <Icon icon="ph:sparkle-fill" width={12} /> Cleaned (After)
+                    </button>
+                    <button
+                      type="button"
+                      className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${
+                        viewMode === 'before'
+                          ? 'bg-slate-800 text-white shadow'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewMode('before');
+                        if (previewFrameRef.current && imgEngine) {
+                          renderTuner(previewFrameRef.current, sliders, 'image', imgEngine.bg96, 'before');
+                        }
+                      }}
+                    >
+                      <Icon icon="ph:image" width={12} /> Original (Before)
+                    </button>
+                  </div>
+                )}
+              </div>
               <div
                 className="main-canvas-wrapper"
                 title="Click or drop a new image to replace"
