@@ -9,6 +9,7 @@ export default function Footer() {
   return (
     <>
       <footer className="app-footer">
+        <div className="footer-content">
           <div className="footer-links flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-slate-500 mb-2">
             <a href="/" className="hover:text-indigo-600 transition-colors">Home</a>
             <span className="footer-dot">•</span>
