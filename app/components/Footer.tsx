@@ -9,15 +9,38 @@ export default function Footer() {
   return (
     <>
       <footer className="app-footer">
-        <div className="footer-content">
-          <div className="footer-links">
-            <button type="button" className="footer-link-btn" onClick={() => privacyRef.current?.showModal()}>
-              Privacy Policy
-            </button>
+          <div className="footer-links flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs font-medium text-slate-500 mb-2">
+            <a href="/" className="hover:text-indigo-600 transition-colors">Home</a>
             <span className="footer-dot">•</span>
-            <button type="button" className="footer-link-btn" onClick={() => termsRef.current?.showModal()}>
+            <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How It Works</a>
+            <span className="footer-dot">•</span>
+            <a href="#comparison" className="hover:text-indigo-600 transition-colors">Before &amp; After</a>
+            <span className="footer-dot">•</span>
+            <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+            <span className="footer-dot">•</span>
+            <a href="#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
+            <span className="footer-dot">•</span>
+            <a
+              href="#privacy"
+              className="hover:text-indigo-600 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                privacyRef.current?.showModal();
+              }}
+            >
+              Privacy Policy
+            </a>
+            <span className="footer-dot">•</span>
+            <a
+              href="#terms"
+              className="hover:text-indigo-600 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                termsRef.current?.showModal();
+              }}
+            >
               Terms of Service
-            </button>
+            </a>
           </div>
           <p className="footer-sub">
             100% Free, Private &amp; Open-Architecture • All media processed locally in your browser with zero server uploads
