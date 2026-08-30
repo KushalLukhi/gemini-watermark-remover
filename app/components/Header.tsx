@@ -6,8 +6,10 @@ import { Icon } from '@iconify/react';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleScroll() {
@@ -18,6 +20,7 @@ export default function Header() {
         // Scrolling Down -> Hide
         setVisible(false);
         setMobileOpen(false);
+        setLangOpen(false);
       } else if (currentScrollY < lastScrollY.current - 6) {
         // Scrolling Up -> Show
         setVisible(true);
@@ -25,8 +28,18 @@ export default function Header() {
       lastScrollY.current = currentScrollY;
     }
 
+    function handleClickOutside(e: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   function closeMobile() {
@@ -39,10 +52,10 @@ export default function Header() {
         visible ? 'translate-y-0' : '-translate-y-[140%]'
       }`}
     >
-      <div className="relative mx-auto flex max-w-6xl items-center justify-between overflow-hidden rounded-full border border-white/70 bg-white/45 px-6 py-2.5 shadow-[0_10px_40px_-20px_rgba(15,23,42,0.40)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/35 pointer-events-auto transition-all">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/70 bg-white/45 px-6 py-2.5 shadow-[0_10px_40px_-20px_rgba(15,23,42,0.40)] backdrop-blur-2xl supports-[backdrop-filter]:bg-white/35 pointer-events-auto transition-all">
         {/* Ambient glass reflection gradient overlay matching SequalInfotech */}
         <div
-          className="pointer-events-none absolute inset-0 rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0.2)_100%),radial-gradient(circle_at_15%_10%,rgba(34,211,238,0.18),transparent_25%),radial-gradient(circle_at_85%_10%,rgba(99,102,241,0.18),transparent_25%)]"
+          className="pointer-events-none absolute inset-0 rounded-full overflow-hidden bg-[linear-gradient(180deg,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0.2)_100%),radial-gradient(circle_at_15%_10%,rgba(34,211,238,0.18),transparent_25%),radial-gradient(circle_at_85%_10%,rgba(99,102,241,0.18),transparent_25%)]"
           aria-hidden="true"
         />
         <div
@@ -86,48 +99,93 @@ export default function Header() {
           </a>
 
           {/* Language Selector Dropdown */}
-          <div className="relative group/lang ml-1">
+          <div ref={langRef} className="relative ml-1">
             <button
               type="button"
-              className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/70 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-white transition-colors"
+              onClick={() => setLangOpen((o) => !o)}
+              className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold transition-all shadow-sm ${
+                langOpen
+                  ? 'border-indigo-400 bg-indigo-50 text-indigo-700'
+                  : 'border-slate-300/80 bg-white/90 text-slate-700 hover:bg-white hover:border-slate-400'
+              }`}
               aria-label="Select Language"
+              aria-expanded={langOpen}
             >
-              <Icon icon="ph:globe-bold" width={14} className="text-indigo-600" />
+              <Icon icon="ph:globe-bold" width={15} className="text-indigo-600" />
               <span>Languages</span>
-              <Icon icon="ph:caret-down-bold" width={10} className="text-slate-400 group-hover/lang:rotate-180 transition-transform" />
+              <Icon
+                icon="ph:caret-down-bold"
+                width={11}
+                className={`text-slate-400 transition-transform duration-200 ${langOpen ? 'rotate-180 text-indigo-600' : ''}`}
+              />
             </button>
-            <div className="invisible opacity-0 group-hover/lang:visible group-hover/lang:opacity-100 absolute right-0 top-full pt-2 z-50 min-w-[160px] transition-all duration-150">
-              <div className="rounded-2xl border border-slate-200/80 bg-white/95 p-1.5 shadow-xl backdrop-blur-xl flex flex-col gap-0.5">
-                <a href="/" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇺🇸</span>
-                  <span>English</span>
-                </a>
-                <a href="/es" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇪🇸</span>
-                  <span>Español</span>
-                </a>
-                <a href="/ja" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇯🇵</span>
-                  <span>日本語</span>
-                </a>
-                <a href="/zh" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇨🇳</span>
-                  <span>简体中文</span>
-                </a>
-                <a href="/pt" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇧🇷</span>
-                  <span>Português</span>
-                </a>
-                <a href="/de" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇩🇪</span>
-                  <span>Deutsch</span>
-                </a>
-                <a href="/fr" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
-                  <span>🇫🇷</span>
-                  <span>Français</span>
-                </a>
+
+            {/* Dropdown Menu */}
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-2.5 z-50 min-w-[180px] rounded-2xl border border-slate-200/90 bg-white/95 p-1.5 shadow-[0_20px_50px_rgba(15,23,42,0.22)] backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                  Select Language
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <a
+                    href="/"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇺🇸</span>
+                    <span>English</span>
+                  </a>
+                  <a
+                    href="/es"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇪🇸</span>
+                    <span>Español</span>
+                  </a>
+                  <a
+                    href="/ja"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇯🇵</span>
+                    <span>日本語</span>
+                  </a>
+                  <a
+                    href="/zh"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇨🇳</span>
+                    <span>简体中文</span>
+                  </a>
+                  <a
+                    href="/pt"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇧🇷</span>
+                    <span>Português</span>
+                  </a>
+                  <a
+                    href="/de"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇩🇪</span>
+                    <span>Deutsch</span>
+                  </a>
+                  <a
+                    href="/fr"
+                    className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    onClick={() => setLangOpen(false)}
+                  >
+                    <span className="text-sm">🇫🇷</span>
+                    <span>Français</span>
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Primary CTA button */}
