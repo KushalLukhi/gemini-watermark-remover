@@ -25,29 +25,50 @@ export const metadata: Metadata = {
 export default function HowToRemoveGeminiWatermarkPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: 'How to Remove Gemini Watermark from Images and Videos',
-    description:
-      'Step-by-step tutorial on removing the visible Google Gemini 4-point sparkle watermark from AI images and Veo videos for free.',
-    totalTime: 'PT1M',
-    step: [
+    '@graph': [
       {
-        '@type': 'HowToStep',
-        name: 'Upload Your Gemini Image or Video',
-        text: 'Drag and drop or select your Gemini Imagen photo (PNG, JPG, WebP) or Veo video (MP4, WebM, MOV) into the remover tool.',
-        url: `${siteUrl}/how-to-remove-gemini-watermark#step1`,
+        '@type': 'HowTo',
+        name: 'How to Remove Gemini Watermark from Images and Videos',
+        description:
+          'Step-by-step tutorial on removing the visible Google Gemini 4-point sparkle watermark from AI images and Veo videos for free.',
+        totalTime: 'PT1M',
+        step: [
+          {
+            '@type': 'HowToStep',
+            name: 'Upload Your Gemini Image or Video',
+            text: 'Drag and drop or select your Gemini Imagen photo (PNG, JPG, WebP) or Veo video (MP4, WebM, MOV) into the remover tool.',
+            url: `${siteUrl}/how-to-remove-gemini-watermark#step1`,
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Auto-Detect and Fine-Tune',
+            text: 'The engine automatically detects the exact watermark position and size. You can use the dual 4x zoom preview to fine-tune alignment.',
+            url: `${siteUrl}/how-to-remove-gemini-watermark#step2`,
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Cleaned Media',
+            text: 'Click Download Cleaned PNG or Video to instantly save your media with zero watermark, zero blur, and original quality.',
+            url: `${siteUrl}/how-to-remove-gemini-watermark#step3`,
+          },
+        ],
       },
       {
-        '@type': 'HowToStep',
-        name: 'Auto-Detect and Fine-Tune',
-        text: 'The engine automatically detects the exact watermark position and size. You can use the dual 4x zoom preview to fine-tune alignment.',
-        url: `${siteUrl}/how-to-remove-gemini-watermark#step2`,
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'Download Cleaned Media',
-        text: 'Click Download Cleaned PNG or Video to instantly save your media with zero watermark, zero blur, and 100% original quality.',
-        url: `${siteUrl}/how-to-remove-gemini-watermark#step3`,
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: siteUrl,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'How to Remove Gemini Watermark',
+            item: `${siteUrl}/how-to-remove-gemini-watermark`,
+          },
+        ],
       },
     ],
   };
@@ -108,6 +129,35 @@ export default function HowToRemoveGeminiWatermarkPage() {
                   Click <strong>Download Cleaned PNG</strong> (for images) or <strong>Download Cleaned Video</strong> (for MP4/WebM videos). Your file is processed locally and saved directly to your downloads folder with 100% original quality.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Alternative Method: Disable in Google Gemini Settings */}
+        <section className="info-section mb-12">
+          <div className="section-header">
+            <div className="section-badge">
+              <Icon icon="ph:gear-six-bold" width={14} />
+              <span>Alternative Method</span>
+            </div>
+            <h2 className="section-title">How to Disable Watermarks in Gemini Account Settings</h2>
+            <p className="section-subtitle">
+              Google provides a native setting to prevent watermarks on future generations. Here is how to toggle it.
+            </p>
+          </div>
+
+          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 max-w-3xl mx-auto space-y-4">
+            <ol className="text-sm text-slate-700 space-y-3 list-decimal list-inside leading-relaxed">
+              <li>Open <strong>gemini.google.com</strong> in your browser and log into your Google account.</li>
+              <li>Click the <strong>Settings (gear icon)</strong> located in the lower-left navigation menu or top header.</li>
+              <li>Select <strong>Media watermark</strong> from the settings options.</li>
+              <li>Switch the toggle for visible watermark to <strong>Off</strong>.</li>
+            </ol>
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-start gap-2">
+              <Icon icon="ph:warning-circle-bold" width={18} className="flex-shrink-0 mt-0.5 text-amber-600" />
+              <span>
+                <strong>Important limitation:</strong> This setting only applies to future images you generate. It cannot retroactively clean watermarks from existing images or Veo AI videos you have already downloaded, which is why our online tool above is required for existing files.
+              </span>
             </div>
           </div>
         </section>

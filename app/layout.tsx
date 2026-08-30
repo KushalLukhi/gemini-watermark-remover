@@ -68,7 +68,8 @@ const jsonLd = {
         'Gemini Logo Remover',
         'Gemini Video Watermark Remover',
         'Remove Gemini Watermark Online',
-        'Gemini Watermark Remover Video',
+        'Veo Watermark Remover',
+        'Google AI Watermark Remover',
       ],
       url: siteUrl,
       applicationCategory: 'MultimediaApplication',
@@ -79,13 +80,7 @@ const jsonLd = {
         price: '0',
         priceCurrency: 'USD',
       },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        ratingCount: '1420',
-        bestRating: '5',
-        worstRating: '1',
-      },
+
       featureList: [
         '100% Client-Side Private Browser Processing',
         'Mathematical Inverse Alpha Unblending (Zero Quality Loss & No AI Blur)',

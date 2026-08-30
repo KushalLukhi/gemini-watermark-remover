@@ -3,21 +3,20 @@ import Header from '../components/Header';
 import UnifiedRemover from '../components/UnifiedRemover';
 import TrustStrip from '../components/TrustStrip';
 import Footer from '../components/Footer';
-import { Icon } from '@iconify/react';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://geminiremove.com';
 
 export const metadata: Metadata = {
-  title: 'Gemini Video Watermark Remover – Free Veo AI Video Tool',
+  title: 'Gemini Video Watermark Remover – Free Veo & Omni Flash Tool',
   description:
-    'Free online Gemini video watermark remover. Remove watermarks from Google Gemini & Veo AI videos with zero blur, original audio, and 100% privacy.',
+    'Remove watermarks from Google Gemini, Veo 3, and Omni Flash AI videos frame-by-frame. Preserves original audio, zero blur, 100% client-side privacy.',
   alternates: {
     canonical: `${siteUrl}/gemini-video-watermark-remover`,
   },
   openGraph: {
-    title: 'Gemini Video Watermark Remover – Free Veo AI Video Tool',
+    title: 'Gemini Video Watermark Remover – Free Veo & Omni Flash Tool',
     description:
-      'Free online Gemini video watermark remover. Remove watermarks from Google Gemini & Veo AI videos with zero blur, original audio, and 100% privacy.',
+      'Remove watermarks from Google Gemini, Veo 3, and Omni Flash AI videos frame-by-frame. Preserves original audio, zero blur, 100% client-side privacy.',
     url: `${siteUrl}/gemini-video-watermark-remover`,
   },
 };
@@ -25,18 +24,76 @@ export const metadata: Metadata = {
 export default function GeminiVideoWatermarkRemoverPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Gemini Video Watermark Remover',
-    url: `${siteUrl}/gemini-video-watermark-remover`,
-    applicationCategory: 'MultimediaApplication',
-    operatingSystem: 'Any',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
-    description:
-      'Remove Gemini and Google Veo video watermarks frame-by-frame directly in your browser with original audio preserved and zero quality loss.',
+    '@graph': [
+      {
+        '@type': 'WebApplication',
+        name: 'Gemini Video Watermark Remover',
+        url: `${siteUrl}/gemini-video-watermark-remover`,
+        applicationCategory: 'MultimediaApplication',
+        operatingSystem: 'Any',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+        description:
+          'Remove Gemini, Veo, and Omni Flash video watermarks frame-by-frame directly in your browser with original audio preserved and zero quality loss.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: siteUrl,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Gemini Video Watermark Remover',
+            item: `${siteUrl}/gemini-video-watermark-remover`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Does this video remover support Google Veo 3 and Omni Flash videos?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Yes. It supports all Google AI video outputs including Veo 3, Omni Flash, and Google Flow in MP4, WebM, and MOV formats up to 4K resolution.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Will the video lose audio or quality during watermark removal?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. The original audio track (AAC, Opus, or other codecs) is extracted and re-multiplexed into the final video without re-encoding. Only the small watermark overlay area is processed.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'How does frame-by-frame video processing work?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'The video is decoded locally using the WebCodecs API with hardware acceleration. Each frame is individually processed to remove the watermark overlay, then re-encoded into the output file. The audio track is passthrough without re-encoding.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is there a file size or duration limit for videos?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Since all processing happens locally in your browser, there are no server-imposed limits. We recommend videos under 500MB for optimal browser performance. Processing speed depends on your device hardware.',
+            },
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -52,92 +109,128 @@ export default function GeminiVideoWatermarkRemoverPage() {
             Gemini <span className="hero-title-gradient">Video Watermark Remover</span>
           </h1>
           <p className="hero-description">
-            Clean <strong>Google Gemini &amp; Veo AI video watermarks</strong> frame-by-frame in your browser.
-            Preserves 100% of your original audio tracks, color grading, and video clarity with zero server uploads.
+            Remove watermarks from <strong>Google Veo, Omni Flash, and Gemini AI videos</strong> frame-by-frame
+            in your browser. Preserves original audio tracks, color grading, and full resolution.
           </p>
         </div>
 
         <TrustStrip />
         <UnifiedRemover />
 
-        {/* Video Technical Deep Dive */}
-        <section className="how-it-works-section mt-12">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">
-              How Video Watermark Removal Works
-            </h2>
-            <p className="text-sm text-slate-600">
-              Unlike traditional video tools that blur large rectangular patches, our engine uses hardware-accelerated WebCodecs to process each frame with mathematical precision.
+        {/* Video-Specific Technical Explanation */}
+        <section className="info-section">
+          <div className="section-header">
+            <h2 className="section-title">How Video Watermark Removal Works</h2>
+            <p className="section-subtitle">
+              Frame-by-frame processing with hardware-accelerated WebCodecs and original audio passthrough.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
-                <Icon icon="ph:film-strip-bold" width={22} />
-              </div>
-              <h3 className="font-bold text-slate-800 mb-2">Frame-by-Frame Demuxing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Your video is decoded locally frame-by-frame using hardware acceleration. The watermark coordinate is tracked across every individual frame.
+          <div className="info-cards-grid" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div className="info-card">
+              <h3 className="info-card-title">Frame-by-Frame Demuxing</h3>
+              <p className="info-card-text">
+                Your video is decoded locally frame-by-frame using the browser&apos;s WebCodecs API
+                with hardware acceleration. The watermark coordinates are tracked consistently
+                across every individual frame for precise removal.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
-                <Icon icon="ph:speaker-high-bold" width={22} />
-              </div>
-              <h3 className="font-bold text-slate-800 mb-2">Original Audio Passthrough</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                The AAC/Opus audio track is extracted and re-multiplexed into the final MP4/WebM video without re-encoding, preserving 100% audio fidelity.
+            <div className="info-card">
+              <h3 className="info-card-title">Original Audio Passthrough</h3>
+              <p className="info-card-text">
+                The audio track (AAC, Opus, or other codecs) is extracted from the container and
+                re-multiplexed into the output file without any re-encoding. This preserves 100%
+                of the original audio quality, including voice-over, music, and sound effects.
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
-                <Icon icon="ph:shield-check-bold" width={22} />
-              </div>
-              <h3 className="font-bold text-slate-800 mb-2">100% Private Client-Side</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Your high-resolution video clips are never sent over the network. Processing happens entirely inside your browser GPU/CPU.
+            <div className="info-card">
+              <h3 className="info-card-title">Supported AI Video Models</h3>
+              <p className="info-card-text">
+                Works with videos generated by Google Veo, Veo 3, Omni Flash, and Google Flow.
+                All of these models apply the same semi-transparent Gemini sparkle watermark overlay,
+                which this tool removes using inverse alpha unblending.
               </p>
             </div>
           </div>
         </section>
 
         {/* Video FAQ */}
-        <section className="faq-section mt-16 mb-16">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">
-              Gemini Video Watermark Remover FAQs
-            </h2>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="font-bold text-slate-800 text-sm mb-1">
-                Does this video remover support Google Veo 3 videos?
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Yes! It supports all Google Veo and Gemini AI video formats (MP4, WebM, MOV) up to 4K resolution.
-              </p>
+        <section className="faq-section">
+          <div className="faq-layout">
+            <div className="faq-header-col">
+              <h2 className="faq-title">Video Watermark Remover FAQ</h2>
             </div>
+            <div className="faq-list-col">
+              <div className="faq-container">
+                <details className="faq-item">
+                  <summary className="faq-question">
+                    <div className="faq-q-left">
+                      <span className="faq-num">01</span>
+                      <span>What video formats are supported?</span>
+                    </div>
+                  </summary>
+                  <div className="faq-answer">
+                    MP4, WebM, and MOV formats at resolutions up to 4K UHD. MP4 (H.264/H.265) is the
+                    most common format for Veo and Omni Flash outputs.
+                  </div>
+                </details>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="font-bold text-slate-800 text-sm mb-1">
-                Will the video lose audio or quality?
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                No. The original audio track is preserved completely, and only the small watermark overlay in the corner is cleaned.
-              </p>
-            </div>
+                <details className="faq-item">
+                  <summary className="faq-question">
+                    <div className="faq-q-left">
+                      <span className="faq-num">02</span>
+                      <span>Does this support Google Veo 3 and Omni Flash?</span>
+                    </div>
+                  </summary>
+                  <div className="faq-answer">
+                    Yes. Google Veo, Veo 3, Omni Flash, and Google Flow all apply the same Gemini sparkle
+                    watermark overlay. This tool removes it from all of these video sources.
+                  </div>
+                </details>
 
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <h3 className="font-bold text-slate-800 text-sm mb-1">
-                Is there any video file size or duration limit?
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Because processing happens locally in your browser, there are no artificial server limits. We recommend videos under 500MB for optimal performance.
-              </p>
+                <details className="faq-item">
+                  <summary className="faq-question">
+                    <div className="faq-q-left">
+                      <span className="faq-num">03</span>
+                      <span>Will my video lose audio quality?</span>
+                    </div>
+                  </summary>
+                  <div className="faq-answer">
+                    No. The original audio track is extracted and re-multiplexed without re-encoding.
+                    There is zero audio quality loss.
+                  </div>
+                </details>
+
+                <details className="faq-item">
+                  <summary className="faq-question">
+                    <div className="faq-q-left">
+                      <span className="faq-num">04</span>
+                      <span>Is there a video file size limit?</span>
+                    </div>
+                  </summary>
+                  <div className="faq-answer">
+                    There are no server-imposed limits since processing happens entirely in your browser.
+                    We recommend videos under 500MB for optimal browser performance. Processing speed
+                    depends on your device&apos;s CPU and GPU capabilities.
+                  </div>
+                </details>
+
+                <details className="faq-item">
+                  <summary className="faq-question">
+                    <div className="faq-q-left">
+                      <span className="faq-num">05</span>
+                      <span>How long does video processing take?</span>
+                    </div>
+                  </summary>
+                  <div className="faq-answer">
+                    Processing speed depends on the video length, resolution, and your device hardware.
+                    A 10-second 1080p video typically processes in 5-15 seconds on a modern device
+                    with hardware-accelerated WebCodecs support.
+                  </div>
+                </details>
+              </div>
             </div>
           </div>
         </section>

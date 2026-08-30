@@ -68,10 +68,10 @@ export default function DoesVsDoesntSection() {
             </div>
           </div>
           <ul className="does-list">
-            {doesList.map((item, i) => (
+            {doesntList.map((item, i) => (
               <li key={i} className="does-list-item">
                 <Icon icon="ph:x-circle-fill" width={18} className="text-rose-500 flex-shrink-0 mt-0.5" />
-                <span>{doesntList[i]}</span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>

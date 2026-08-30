@@ -45,7 +45,7 @@ export default function WhoUsesSection() {
         </div>
         <h2 className="section-title">Who Uses Gemini Watermark Remover?</h2>
         <p className="section-subtitle">
-          Trusted daily by thousands of professionals to prepare AI-generated visuals for commercial and creative projects.
+          Built for professionals who need clean, watermark-free AI visuals for commercial and creative projects.
         </p>
       </div>
 

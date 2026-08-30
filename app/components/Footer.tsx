@@ -19,29 +19,13 @@ export default function Footer() {
             <span className="footer-dot">•</span>
             <a href="/how-to-remove-gemini-watermark" className="hover:text-indigo-600 transition-colors">How-To Guide</a>
             <span className="footer-dot">•</span>
+            <a href="/about" className="hover:text-indigo-600 transition-colors">About</a>
+            <span className="footer-dot">•</span>
             <a href="/#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
             <span className="footer-dot">•</span>
-            <a
-              href="#privacy"
-              className="hover:text-indigo-600 transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                privacyRef.current?.showModal();
-              }}
-            >
-              Privacy Policy
-            </a>
+            <a href="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</a>
             <span className="footer-dot">•</span>
-            <a
-              href="#terms"
-              className="hover:text-indigo-600 transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                termsRef.current?.showModal();
-              }}
-            >
-              Terms of Service
-            </a>
+            <a href="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</a>
           </div>
           <p className="footer-sub">
             100% Free, Private &amp; Open-Architecture • All media processed locally in your browser with zero server uploads
