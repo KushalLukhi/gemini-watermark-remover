@@ -15,6 +15,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   alternates: {
     canonical: '/',
+    languages: {
+      'en': '/',
+      'es': '/es',
+      'ja': '/ja',
+      'zh': '/zh',
+      'pt': '/pt',
+      'de': '/de',
+      'fr': '/fr',
+      'x-default': '/',
+    },
   },
   title: 'Gemini Watermark Remover – Free AI Logo & Video Tool',
   description:

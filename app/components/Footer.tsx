@@ -27,6 +27,22 @@ export default function Footer() {
             <span className="footer-dot">•</span>
             <a href="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</a>
           </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] font-semibold text-slate-400 mb-3">
+            <span className="text-slate-500 font-bold">Languages:</span>
+            <a href="/" className="hover:text-indigo-600 transition-colors">🇺🇸 English</a>
+            <span>•</span>
+            <a href="/es" className="hover:text-indigo-600 transition-colors">🇪🇸 Español</a>
+            <span>•</span>
+            <a href="/ja" className="hover:text-indigo-600 transition-colors">🇯🇵 日本語</a>
+            <span>•</span>
+            <a href="/zh" className="hover:text-indigo-600 transition-colors">🇨🇳 简体中文</a>
+            <span>•</span>
+            <a href="/pt" className="hover:text-indigo-600 transition-colors">🇧🇷 Português</a>
+            <span>•</span>
+            <a href="/de" className="hover:text-indigo-600 transition-colors">🇩🇪 Deutsch</a>
+            <span>•</span>
+            <a href="/fr" className="hover:text-indigo-600 transition-colors">🇫🇷 Français</a>
+          </div>
           <p className="footer-sub">
             100% Free, Private &amp; Open-Architecture • All media processed locally in your browser with zero server uploads
           </p>

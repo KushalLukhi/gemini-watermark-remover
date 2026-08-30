@@ -85,6 +85,51 @@ export default function Header() {
             FAQ
           </a>
 
+          {/* Language Selector Dropdown */}
+          <div className="relative group/lang ml-1">
+            <button
+              type="button"
+              className="flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/70 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-white transition-colors"
+              aria-label="Select Language"
+            >
+              <Icon icon="ph:globe-bold" width={14} className="text-indigo-600" />
+              <span>Languages</span>
+              <Icon icon="ph:caret-down-bold" width={10} className="text-slate-400 group-hover/lang:rotate-180 transition-transform" />
+            </button>
+            <div className="invisible opacity-0 group-hover/lang:visible group-hover/lang:opacity-100 absolute right-0 top-full pt-2 z-50 min-w-[160px] transition-all duration-150">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/95 p-1.5 shadow-xl backdrop-blur-xl flex flex-col gap-0.5">
+                <a href="/" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇺🇸</span>
+                  <span>English</span>
+                </a>
+                <a href="/es" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇪🇸</span>
+                  <span>Español</span>
+                </a>
+                <a href="/ja" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇯🇵</span>
+                  <span>日本語</span>
+                </a>
+                <a href="/zh" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇨🇳</span>
+                  <span>简体中文</span>
+                </a>
+                <a href="/pt" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇧🇷</span>
+                  <span>Português</span>
+                </a>
+                <a href="/de" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇩🇪</span>
+                  <span>Deutsch</span>
+                </a>
+                <a href="/fr" className="flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-slate-800 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">
+                  <span>🇫🇷</span>
+                  <span>Français</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Primary CTA button */}
           <a
             href="#tool-dropzone"
@@ -126,6 +171,20 @@ export default function Header() {
             <a href="#faq" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-white/60" onClick={closeMobile}>
               FAQ
             </a>
+
+            <div className="pt-2 border-t border-slate-200/60">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 block">Language</span>
+              <div className="grid grid-cols-2 gap-1 px-1">
+                <a href="/" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇺🇸 English</a>
+                <a href="/es" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇪🇸 Español</a>
+                <a href="/ja" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇯🇵 日本語</a>
+                <a href="/zh" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇨🇳 简体中文</a>
+                <a href="/pt" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇧🇷 Português</a>
+                <a href="/de" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇩🇪 Deutsch</a>
+                <a href="/fr" className="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white/80" onClick={closeMobile}>🇫🇷 Français</a>
+              </div>
+            </div>
+
             <a
               href="#tool-dropzone"
               className="mt-2 inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 px-4 py-2 text-sm font-semibold text-white"
