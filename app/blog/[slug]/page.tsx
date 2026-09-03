@@ -133,7 +133,7 @@ export default async function SingleBlogPostPage({ params }: Props) {
 
         {/* Article Content */}
         <article
-          className="prose prose-slate max-w-3xl mx-auto px-4 py-8 text-sm sm:text-base text-slate-700 leading-relaxed space-y-6"
+          className="blog-prose max-w-3xl mx-auto px-4 py-8"
           dangerouslySetInnerHTML={{ __html: post.contentHtml }}
         />
 
