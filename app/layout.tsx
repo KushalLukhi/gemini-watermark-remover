@@ -7,6 +7,9 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://geminiremove.com';
