@@ -22,6 +22,8 @@
 
 ![Google Veo Watermark Remover Before and After Showcase](./public/assets/before_after_showcase.gif)
 
+🎬 **[Click here to watch / download the Full 1080p Video (with audio)](https://github.com/KushalLukhi/gemini-watermark-remover/raw/main/public/assets/before_after_1080p_showcase.mp4)**
+
 </div>
 
 > **Left:** Original Google Veo generation with semi-transparent 4-point sparkle watermark.  
