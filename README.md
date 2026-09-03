@@ -16,11 +16,13 @@
 
 ---
 
-## 🎬 Live Before & After Showcase (Google Veo 1080p Video)
+## 🎬 Live Before & After Showcase (Google Veo Video)
 
-Watch the side-by-side comparison below demonstrating Google Veo video watermark removal using browser-native WebCodecs hardware decoding with **100% audio preserved** and **zero blurry smudges**:
+<div align="center">
 
-https://github.com/KushalLukhi/gemini-watermark-remover/raw/main/public/assets/before_after_1080p_showcase.mp4
+![Google Veo Watermark Remover Before and After Showcase](./public/assets/before_after_showcase.gif)
+
+</div>
 
 > **Left:** Original Google Veo generation with semi-transparent 4-point sparkle watermark.  
 > **Right:** Cleaned video output processed losslessly with original colors, textures, and audio track intact.
@@ -90,21 +92,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
-
----
-
-## 📚 SEO Articles & Guides
-
-Explore comprehensive documentation and guides published on our blog:
-
-* [How to Remove the Gemini Watermark (Free & Zero Blur)](https://geminiremove.com/blog/how-to-remove-gemini-watermark)
-* [How to Remove Google Veo Video Watermarks (Audio Preserved)](https://geminiremove.com/blog/gemini-video-watermark-remover-guide)
-* [Visible Gemini Logo vs. Google DeepMind SynthID™](https://geminiremove.com/blog/gemini-watermark-vs-synthid)
-* [How to Remove Nano Banana Watermarks from Gemini Images](https://geminiremove.com/blog/nano-banana-watermark-remover)
-* [How to Clean Watermarks from Google Imagen 3 Artwork Losslessly](https://geminiremove.com/blog/google-imagen-3-watermark-remover)
-* [Can You Turn Off the Gemini Watermark in Google Settings?](https://geminiremove.com/blog/how-to-turn-off-gemini-watermark-settings)
-* [Is It Legal to Remove the Gemini Watermark for Commercial Use?](https://geminiremove.com/blog/is-it-legal-to-remove-gemini-watermark)
-* [How to Remove Gemini Watermark on Mobile (iPhone & Android)](https://geminiremove.com/blog/remove-gemini-watermark-iphone-android)
 
 ---
 
