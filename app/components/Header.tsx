@@ -97,6 +97,9 @@ export default function Header() {
           <a href="#faq" className="nav-link">
             FAQ
           </a>
+          <a href="/blog" className="nav-link">
+            Blog
+          </a>
 
           {/* Language Selector Dropdown */}
           <div ref={langRef} className="relative ml-1">
@@ -228,6 +231,9 @@ export default function Header() {
             </a>
             <a href="#faq" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-white/60" onClick={closeMobile}>
               FAQ
+            </a>
+            <a href="/blog" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-white/60" onClick={closeMobile}>
+              Blog
             </a>
 
             <div className="pt-2 border-t border-slate-200/60">

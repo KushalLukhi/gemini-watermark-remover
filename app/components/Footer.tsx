@@ -19,6 +19,8 @@ export default function Footer() {
             <span className="footer-dot">•</span>
             <a href="/how-to-remove-gemini-watermark" className="hover:text-indigo-600 transition-colors">How-To Guide</a>
             <span className="footer-dot">•</span>
+            <a href="/blog" className="hover:text-indigo-600 transition-colors font-semibold">Blog</a>
+            <span className="footer-dot">•</span>
             <a href="/about" className="hover:text-indigo-600 transition-colors">About</a>
             <span className="footer-dot">•</span>
             <a href="/#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
