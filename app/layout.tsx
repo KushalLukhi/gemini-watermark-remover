@@ -29,35 +29,35 @@ export const metadata: Metadata = {
       'x-default': '/',
     },
   },
-  title: 'Gemini Watermark Remover – Free AI Logo & Video Tool',
+  title: 'Free Gemini Watermark Remover & Cleaner | Remove Gemini Logo Online',
   description:
-    'Free Gemini watermark remover. Clean Google Gemini images and Veo videos with zero blur, original audio, and 100% private client-side processing.',
+    'Free Gemini watermark & logo remover for images and video. No upload, no sign-up—pixel-exact cleanup runs locally in your browser. Supports Imagen 3 & Nano Banana.',
   keywords:
-    'gemini watermark remover, gemini logo remover, remove gemini watermark, gemini video watermark remover, gemini watermark remover video, remove google gemini logo, gemini ai watermark remover, google imagen 3 watermark remover, veo watermark remover, free gemini watermark remover online',
+    'gemini watermark remover, remove gemini watermark, gemini logo remover, remove gemini logo, gemini watermark remover online, gemini video watermark remover, free gemini watermark remover, nano banana watermark remover, google imagen 3 watermark remover, veo watermark remover',
   robots: { index: true, follow: true },
   authors: [{ name: 'Kushal Lukhi', url: 'https://github.com/KushalLukhi' }],
   openGraph: {
     type: 'website',
     siteName: 'Gemini Watermark Remover',
-    title: 'Gemini Watermark Remover – Free AI Logo & Video Tool',
+    title: 'Free Gemini Watermark Remover & Cleaner | Remove Gemini Logo Online',
     description:
-      'Free Gemini watermark remover. Clean Google Gemini images and Veo videos with zero blur, original audio, and 100% private client-side processing.',
+      'Free Gemini watermark & logo remover for images and video. No upload, no sign-up—pixel-exact cleanup runs locally in your browser. Supports Imagen 3 & Nano Banana.',
     url: siteUrl,
     images: [
       {
         url: '/assets/logo.webp',
         width: 1200,
         height: 630,
-        alt: 'Gemini Watermark Remover & Gemini Video Watermark Remover Online',
+        alt: 'Free Gemini Watermark Remover & Video Cleaner Online',
       },
     ],
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Gemini Watermark Remover – Free AI Logo & Video Tool',
+    title: 'Free Gemini Watermark Remover & Cleaner | Remove Gemini Logo Online',
     description:
-      'Free Gemini watermark remover. Clean Google Gemini images and Veo videos with zero blur, original audio, and 100% private client-side processing.',
+      'Free Gemini watermark & logo remover for images and video. No upload, no sign-up—pixel-exact cleanup runs locally in your browser. Supports Imagen 3 & Nano Banana.',
     images: [{ url: '/assets/logo.webp', alt: 'Gemini Watermark Remover & Gemini Video Watermark Remover Online' }],
   },
   icons: {
