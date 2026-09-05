@@ -18,6 +18,6 @@ export const VIDEO_PRESETS: Record<string, { gain: number; offsetX: number; offs
 
 // ── Inline Base64 Reference Images ──
 // Loaded from /assets/bg_48.png and /assets/bg_96.png in the browser
-// These paths are used at runtime in the browser
-export const BG_48_PATH = '/assets/bg_48.png';
-export const BG_96_PATH = '/assets/bg_96.png';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+export const BG_48_PATH = `${basePath}/assets/bg_48.png`;
+export const BG_96_PATH = `${basePath}/assets/bg_96.png`;

@@ -66,7 +66,7 @@ export default function Header() {
         {/* Brand */}
         <a href="/" className="relative z-10 flex items-center gap-2.5 no-underline transition-opacity hover:opacity-90">
           <Image
-            src="/assets/logo.webp"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assets/logo.webp`}
             alt="Gemini Watermark Remover Logo"
             width={36}
             height={36}

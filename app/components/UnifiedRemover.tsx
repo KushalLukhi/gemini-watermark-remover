@@ -159,7 +159,8 @@ export default function UnifiedRemover() {
     if (isProcessing) return;
     try {
       setIsProcessing(true);
-      const res = await fetch('/assets/before_pup.jpg');
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+      const res = await fetch(`${basePath}/assets/before_pup.jpg`);
       const blob = await res.blob();
       const sampleFile = new File([blob], 'sample_gemini_dog.jpg', { type: 'image/jpeg' });
       await handleFileUpload(sampleFile);
