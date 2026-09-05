@@ -51,7 +51,7 @@ export class VideoWatermarkEngine {
     fullImageData: ImageData,
     width: number,
     height: number,
-    opts: ResolveOptions & { gain?: number } = {}
+    opts: ResolveOptions & { gain?: number; edgeRefinement?: number } = {}
   ) {
     const base = this.getVeoWatermark(width, height);
     return cleanFrame(this.engine.bg96, fullImageData, width, height, base, {
@@ -65,6 +65,7 @@ export class VideoWatermarkEngine {
     opts: ResolveOptions & {
       gain?: number;
       mode?: string;
+      edgeRefinement?: number;
       onProgress?: (p: { progress: number }) => void;
     } = {}
   ) {
@@ -146,6 +147,11 @@ export class VideoWatermarkEngine {
 
     await (output.start as () => Promise<void>)();
 
+    const minDim = Math.min(width, height);
+    const isAbove720p = minDim > 720;
+    const deRingStrength = isAbove720p ? (opts.edgeRefinement ?? 0.85) : 0;
+    const { removeWatermark, healUpscaledVideoEdgeSeam } = await import('./alphaBlend');
+
     const fallbackDur = frameRate > 0 ? 1 / frameRate : 1 / 30;
     const sink = new (VideoSampleSink as new (t: unknown) => Record<string, unknown>)(videoTrack);
     let firstTimestamp: number | null = null;
@@ -163,8 +169,10 @@ export class VideoWatermarkEngine {
       (sample.close as () => void)();
 
       const px = ctx.getImageData(roi.x, roi.y, roi.width, roi.height);
-      const { removeWatermark } = await import('./alphaBlend');
       removeWatermark(px, alpha, region);
+      if (isAbove720p && deRingStrength > 0) {
+        healUpscaledVideoEdgeSeam(px, alpha, region, deRingStrength);
+      }
 
       const bmp = await createImageBitmap(px);
       ctx.drawImage(bmp, roi.x, roi.y);

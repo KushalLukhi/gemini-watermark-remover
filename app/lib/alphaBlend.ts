@@ -251,3 +251,125 @@ export function getAdaptiveImagePreset(
     sizeScale: scale1x,
   };
 }
+
+/**
+ * Fast separable sliding-window box blur for single-channel Float32Array.
+ * O(1) operations per pixel.
+ */
+function boxBlur1D(
+  src: Float32Array,
+  width: number,
+  height: number,
+  radius: number,
+  temp: Float32Array,
+  dst: Float32Array
+): void {
+  const win = 2 * radius + 1;
+  const invWin = 1.0 / win;
+
+  // Horizontal pass
+  for (let r = 0; r < height; r++) {
+    const rowOffset = r * width;
+    let val = 0.0;
+    for (let c = -radius; c <= radius; c++) {
+      const col = c < 0 ? 0 : c >= width ? width - 1 : c;
+      val += src[rowOffset + col];
+    }
+    for (let c = 0; c < width; c++) {
+      temp[rowOffset + c] = val * invWin;
+      const cNext = c + radius + 1 < width ? c + radius + 1 : width - 1;
+      const cPrev = c - radius > 0 ? c - radius : 0;
+      val += src[rowOffset + cNext] - src[rowOffset + cPrev];
+    }
+  }
+
+  // Vertical pass
+  for (let c = 0; c < width; c++) {
+    let val = 0.0;
+    for (let r = -radius; r <= radius; r++) {
+      const row = r < 0 ? 0 : r >= height ? height - 1 : r;
+      val += temp[row * width + c];
+    }
+    for (let r = 0; r < height; r++) {
+      dst[r * width + c] = val * invWin;
+      const rNext = r + radius + 1 < height ? r + radius + 1 : height - 1;
+      const rPrev = r - radius > 0 ? r - radius : 0;
+      val += temp[rNext * width + c] - temp[rPrev * width + c];
+    }
+  }
+}
+
+/**
+ * Specifically heals Gibbs undershoot ringing and etched edge outlines on upscaled videos (>720p).
+ * This function is ONLY invoked for videos with min(width, height) > 720.
+ * Standard 720p videos and all images are completely bypassed.
+ */
+export function healUpscaledVideoEdgeSeam(
+  imageData: ImageData,
+  alphaMap: Float32Array,
+  position: { x: number; y: number; width: number; height: number },
+  strength: number = 0.85
+): void {
+  if (strength <= 0.01) return;
+
+  const { x, y, width, height } = position;
+  const data = imageData.data;
+  const imgWidth = imageData.width;
+  const totalPixels = width * height;
+
+  const edge = new Float32Array(totalPixels);
+  const temp = new Float32Array(totalPixels);
+  const blurredEdge = new Float32Array(totalPixels);
+
+  // 1. Identify edge transition contour from alpha gradient
+  for (let r = 1; r < height - 1; r++) {
+    const rowOffset = r * width;
+    for (let c = 1; c < width - 1; c++) {
+      const idx = rowOffset + c;
+      const a = alphaMap[idx];
+      if (a < 0.002 || a > 0.40) continue;
+
+      const gx = alphaMap[idx + 1] - alphaMap[idx - 1];
+      const gy = alphaMap[idx + width] - alphaMap[idx - width];
+      if (gx * gx + gy * gy > 0.0003) {
+        edge[idx] = 1.0;
+      }
+    }
+  }
+
+  // 2. Dilate and smooth edge mask (radius 2)
+  boxBlur1D(edge, width, height, 2, temp, blurredEdge);
+
+  // 3. Smooth RGB channels and blend strictly over the dilated edge contour
+  const chanSrc = new Float32Array(totalPixels);
+  const chanBlurred = new Float32Array(totalPixels);
+
+  for (let ch = 0; ch < 3; ch++) {
+    for (let r = 0; r < height; r++) {
+      const imgRowOffset = ((y + r) * imgWidth + x) * 4;
+      const localRowOffset = r * width;
+      for (let c = 0; c < width; c++) {
+        chanSrc[localRowOffset + c] = data[imgRowOffset + c * 4 + ch];
+      }
+    }
+
+    boxBlur1D(chanSrc, width, height, 3, temp, chanBlurred);
+
+    for (let r = 0; r < height; r++) {
+      const imgRowOffset = ((y + r) * imgWidth + x) * 4;
+      const localRowOffset = r * width;
+      for (let c = 0; c < width; c++) {
+        const localIdx = localRowOffset + c;
+        const w = Math.min(1.0, blurredEdge[localIdx] * 5.0) * strength;
+        if (w > 0.01) {
+          const pixelIdx = imgRowOffset + c * 4 + ch;
+          const origVal = chanSrc[localIdx];
+          const smoothVal = chanBlurred[localIdx];
+          const finalVal = origVal * (1.0 - w) + smoothVal * w;
+          data[pixelIdx] = finalVal < 0 ? 0 : finalVal > 255 ? 255 : (finalVal + 0.5) | 0;
+        }
+      }
+    }
+  }
+}
+

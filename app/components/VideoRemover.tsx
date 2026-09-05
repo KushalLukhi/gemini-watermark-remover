@@ -4,7 +4,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { Icon } from '@iconify/react';
 import { VideoWatermarkEngine } from '../lib/videoEngine';
 import { detectVideoWatermarkCandidate } from '../lib/autoDetect';
-import { resolveBox, getRoi, buildAlpha, removeWatermark } from '../lib/alphaBlend';
+import { resolveBox, getRoi, buildAlpha, removeWatermark, healUpscaledVideoEdgeSeam } from '../lib/alphaBlend';
 
 interface Sliders {
   gain: number;
@@ -20,6 +20,8 @@ export default function VideoRemover() {
   const [sliders, setSliders] = useState<Sliders>(DEFAULT_SLIDERS);
   const [hasFile, setHasFile] = useState(false);
   const [detectBadge, setDetectBadge] = useState<string>('');
+  const [isUpscaled, setIsUpscaled] = useState(false);
+  const [edgeRefine, setEdgeRefine] = useState(0.85);
   const [dragging, setDragging] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
   const [supported, setSupported] = useState(true);
@@ -43,7 +45,7 @@ export default function VideoRemover() {
   }
 
   const drawVideoFrame = useCallback(
-    (video: HTMLVideoElement, opts: Sliders, eng: VideoWatermarkEngine) => {
+    (video: HTMLVideoElement, opts: Sliders, eng: VideoWatermarkEngine, currentEdgeRefine?: number) => {
       const main = mainCanvasRef.current;
       const zoomOrig = zoomOrigRef.current;
       const zoomClean = zoomCleanRef.current;
@@ -69,6 +71,19 @@ export default function VideoRemover() {
       const roi = getRoi(main.width, main.height, wm);
       const alpha = buildAlpha(eng.engine.bg96, roi, wm, opts.gain);
       removeWatermark(imageData, alpha, { x: roi.x, y: roi.y, width: roi.width, height: roi.height });
+
+      const minDim = Math.min(video.videoWidth, video.videoHeight);
+      const isAbove720p = minDim > 720;
+      const refineVal = currentEdgeRefine !== undefined ? currentEdgeRefine : edgeRefine;
+      if (isAbove720p && refineVal > 0) {
+        healUpscaledVideoEdgeSeam(
+          imageData,
+          alpha,
+          { x: roi.x, y: roi.y, width: roi.width, height: roi.height },
+          refineVal
+        );
+      }
+
       ctx.putImageData(imageData, 0, 0);
 
       // Zoom previews
@@ -94,7 +109,7 @@ export default function VideoRemover() {
       cleanCtx.imageSmoothingEnabled = false;
       cleanCtx.drawImage(main, sx, sy, srcSide, srcSide, 0, 0, ZOOM_SIZE, ZOOM_SIZE);
     },
-    []
+    [edgeRefine]
   );
 
   const detectedRef = useRef<Sliders>(DEFAULT_SLIDERS);
@@ -120,6 +135,12 @@ export default function VideoRemover() {
       setHasFile(true);
       setVideoDims({ width: video.videoWidth, height: video.videoHeight });
 
+      const minDim = Math.min(video.videoWidth, video.videoHeight);
+      const isAbove720p = minDim > 720;
+      setIsUpscaled(isAbove720p);
+      const initialEdgeRefine = isAbove720p ? 0.85 : 0;
+      setEdgeRefine(initialEdgeRefine);
+
       // Capture first frame for detection
       const tmpCanvas = document.createElement('canvas');
       tmpCanvas.width = video.videoWidth;
@@ -138,21 +159,26 @@ export default function VideoRemover() {
       detectedRef.current = newSliders;
       setSliders(newSliders);
 
-      if (detection.matchFound) {
-        setDetectBadge(`Auto-Detected: ${detection.name} (${Math.round(detection.score * 100)}% match)`);
-      } else {
-        setDetectBadge(`Standard Preset Applied (${detection.name})`);
-      }
+      let badge = detection.matchFound
+        ? `Auto-Detected: ${detection.name} (${Math.round(detection.score * 100)}% match)`
+        : `Standard Preset Applied (${detection.name})`;
 
-      drawVideoFrame(video, newSliders, eng);
+      if (isAbove720p) {
+        badge += ` • ✨ Upscaled Video (${minDim}p) — Edge Seam De-Ringing Active`;
+      } else {
+        badge += ` • Standard Native Video (${minDim}p)`;
+      }
+      setDetectBadge(badge);
+
+      drawVideoFrame(video, newSliders, eng, initialEdgeRefine);
     };
   }
 
   useEffect(() => {
     if (videoElRef.current && engine && hasFile) {
-      drawVideoFrame(videoElRef.current, sliders, engine);
+      drawVideoFrame(videoElRef.current, sliders, engine, isUpscaled ? edgeRefine : 0);
     }
-  }, [sliders, engine, hasFile, drawVideoFrame]);
+  }, [sliders, engine, hasFile, drawVideoFrame, edgeRefine, isUpscaled]);
 
   function updateSlider(key: keyof Sliders, value: number) {
     setSliders((s) => ({ ...s, [key]: value }));
@@ -164,6 +190,7 @@ export default function VideoRemover() {
     try {
       const result = await engine.process(fileRef.current, {
         ...sliders,
+        edgeRefinement: isUpscaled ? edgeRefine : 0,
         onProgress: ({ progress: p }) => setProgress(Math.round(p * 100)),
       });
       const a = document.createElement('a');
@@ -258,6 +285,31 @@ export default function VideoRemover() {
                 />
               </div>
             ))}
+
+            {isUpscaled && (
+              <div className="slider-group border-t border-purple-200/50 dark:border-purple-800/50 pt-3 mt-2">
+                <div className="tuner-slider-label">
+                  <span className="flex items-center gap-1.5 font-medium text-purple-700 dark:text-purple-300">
+                    <Icon icon="ph:sparkle-fill" width={14} /> Edge Seam De-Ring (Upscaled Video)
+                  </span>
+                  <span className="font-mono font-semibold text-purple-700 dark:text-purple-300">
+                    {Math.round(edgeRefine * 100)}%
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={1.0}
+                  step={0.05}
+                  value={edgeRefine}
+                  onChange={(e) => setEdgeRefine(parseFloat(e.target.value))}
+                  className="accent-purple-600"
+                />
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-1">
+                  Active for &gt;720p videos: heals Gibbs ringing and dark outline artifacts along the watermark boundary.
+                </p>
+              </div>
+            )}
           </div>
 
           {progress !== null && (
